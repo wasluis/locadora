@@ -20,6 +20,7 @@ public class Ator implements Serializable{
     
     private String nome;
     
+    //Many-To-Many
     private Set<Filme> filmes;
 
     public Long getId() {

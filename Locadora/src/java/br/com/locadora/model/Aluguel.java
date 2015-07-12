@@ -23,12 +23,15 @@ public class Aluguel  implements Serializable{
     
     private Date dataDevolucao;
     
+    //Many-To-Many
     private List<Filme> filmes;
     
+    //Many-To-One
     private Cliente cliente;
     
     private Double valor;
     
+    //Many-To-One
     private Usuario operador;
 
     public Long getId() {

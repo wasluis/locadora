@@ -23,7 +23,8 @@ public class Filme implements Serializable{
     
     private String titulo;
     
-    private Set <Ator> atores;
+    //Many-To-Many
+    private Set<Ator> atores;
     
     private GeneroEnum genero;
     
@@ -31,6 +32,7 @@ public class Filme implements Serializable{
     
     private Double preco;
     
+    //Many-To-Many
     private List<Aluguel> alugueis;
 
     public String getTitulo() {

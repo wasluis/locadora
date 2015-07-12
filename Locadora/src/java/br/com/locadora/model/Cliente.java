@@ -25,6 +25,7 @@ public class Cliente implements Serializable{
     
     private int idade;
     
+    //One-To-Many
     private List<Aluguel> alugueis;
     
     
