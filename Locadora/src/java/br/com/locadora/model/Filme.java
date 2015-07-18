@@ -35,6 +35,19 @@ public class Filme implements Serializable{
     //Many-To-Many
     private List<Aluguel> alugueis;
 
+    
+    public Filme(){}
+
+    public Filme(Long id, String titulo, GeneroEnum genero, int classificacao, Double preco) {
+        this.id = id;
+        this.titulo = titulo;
+        this.genero = genero;
+        this.classificacao = classificacao;
+        this.preco = preco;
+    }
+    
+    
+    
     public String getTitulo() {
         return titulo;
     }

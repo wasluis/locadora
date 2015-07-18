@@ -28,6 +28,16 @@ public class Cliente implements Serializable{
     //One-To-Many
     private List<Aluguel> alugueis;
     
+    public Cliente(){}
+
+    
+    public Cliente(Long id, String nome, String CPF, int idade) {
+        this.id = id;
+        this.nome = nome;
+        this.CPF = CPF;
+        this.idade = idade;
+    }
+    
     
 
     public String getNome() {
