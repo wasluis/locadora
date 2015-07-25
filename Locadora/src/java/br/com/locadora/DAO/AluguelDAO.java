@@ -21,6 +21,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 /**
  *
@@ -45,7 +47,7 @@ public class AluguelDAO {
         return id;
     }
     
-    public Aluguel alugar(Cliente cliente, Usuario usuario, List<Filme> filmes) 
+    public Aluguel alugar(Cliente cliente, Usuario usuario, Date dataAluguel, List<Filme> filmes) 
             throws AluguelPendenteException, QuantidadeFilimesException, ClassificacaoIndicativaException, Exception{
         
         //Verificando quantidade de filmes
@@ -72,7 +74,6 @@ public class AluguelDAO {
         
         Connection connection = ConexaoUtil.getConnection();
         Long idAluguel = this.obterNovoId(connection);
-        Date dataAluguel = new Date();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setLong(1, idAluguel);
         preparedStatement.setTimestamp(2, new Timestamp(dataAluguel.getTime()));
@@ -98,7 +99,7 @@ public class AluguelDAO {
         return aluguelSalvo;
     }
 
-    private Aluguel buscarAluguelPendente(Cliente cliente) throws Exception{
+    public Aluguel buscarAluguelPendente(Cliente cliente) throws Exception{
     
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT a.id idAluguel, data_aluguel, valor, u.id idOperador, u.nome  FROM aluguel a inner join usuario u ON u.id = a.operador_id ") ;
@@ -128,6 +129,46 @@ public class AluguelDAO {
         return aluguel;
     }        
     
+    /**
+     * Devolve o filme e retorna o valor do pagamento
+     * @param cliente
+     * @param dataDevolucao
+     * @return
+     * @throws Exception 
+     */
+    public double devolucao(Cliente cliente, Date dataDevolucao) throws Exception{
+        Aluguel aluguelPendente = this.buscarAluguelPendente(cliente);
+        Double valorTotal = calcularValorTotal(aluguelPendente, dataDevolucao);
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append("UPDATE aluguel set data_devolucao = ? where cliente_id = ? AND data_devolucao is null");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, cliente.getId());
+        preparedStatement.execute();
+        preparedStatement.close();
+        connection.close();
+        
+        return valorTotal;
+    }
+
+    /**
+     * Calcula o valor total do aluguel
+     * @param aluguelPendente
+     * @param dataDevolucao
+     * @return 
+     */
+    private Double calcularValorTotal(Aluguel aluguelPendente, Date dataDevolucao) {
+        int quantFilmes = aluguelPendente.getFilmes().size();
+        DateTime dateAluguel = new DateTime(aluguelPendente.getDataAluguel().getTime());
+        DateTime dateDevolucao = new DateTime(dataDevolucao);
+        int diferencaDias = Days.daysBetween(dateAluguel, dateDevolucao).getDays();
+        int diasAtraso = diferencaDias - 2 - (quantFilmes - 1);
+        Double multa = 1.2 * (diasAtraso > 0 ? diasAtraso : 0);
+        Double valorTotal = aluguelPendente.getValor() + multa;
+        return valorTotal;
+    }
     
     
     
