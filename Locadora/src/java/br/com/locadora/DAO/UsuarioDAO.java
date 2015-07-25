@@ -3,32 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.locadora;
+package br.com.locadora.DAO;
 
-import br.com.locadora.model.Cliente;
+import br.com.locadora.model.Usuario;
 import br.com.locadora.util.ConexaoUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  *
  * @author Washington
  */
-public class ClienteDAO {
-        
-    public void update(Cliente  c) throws Exception{
+public class UsuarioDAO {
+            public void update(Usuario  c) throws Exception{
         Connection connection = ConexaoUtil.getConnection();
         StringBuilder sql = new StringBuilder();
-        sql.append(" UPDATE cliente SET  nome = ?, cpf = ?, idade = ? ");
+        sql.append(" UPDATE usuario SET  nome = ?, login  = ?, senha = ? ");
         sql.append(" WHERE id = ? ");
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setString(1, c.getNome());
-        preparedStatement.setString(2, c.getCPF());
-        preparedStatement.setInt(3, c.getIdade());
+        preparedStatement.setString(2, c.getLogin());
+        preparedStatement.setString(3, c.getSenha());
         preparedStatement.setLong(4, c.getId());
         
         preparedStatement.execute();
@@ -37,20 +33,20 @@ public class ClienteDAO {
         connection.close();
     }
     
-    public void inserir(Cliente c) throws Exception{
+    public void inserir(Usuario c) throws Exception{
         if(c.getId() != null){
             this.update(c);
         }
         else{
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
-            sql.append(" INSERT INTO cliente(id, nome, cpf, idade) ");
-            sql.append(" VALUES ( NEXTVAL('sq_cliente_id'), ?, ?, ?) ");
+            sql.append(" INSERT INTO usuario(id, nome, login, senha) ");
+            sql.append(" VALUES ( NEXTVAL('sq_usuario_id'), ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             preparedStatement.setString(1, c.getNome());
-            preparedStatement.setString(2, c.getCPF());
-            preparedStatement.setInt(3, c.getIdade());
+            preparedStatement.setString(2, c.getLogin());
+            preparedStatement.setString(3, c.getSenha());
             preparedStatement.execute();
             
             preparedStatement.close();
@@ -60,33 +56,35 @@ public class ClienteDAO {
     }
     
     
-    public Cliente recuperar(Long id) throws Exception{
+    public Usuario recuperar(Long id) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, nome, cpf, idade FROM cliente where id = ? ");
+        sql.append(" SELECT id, nome, login, senha FROM usuario where id = ? ");
+        
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
-        Cliente cliente = null;
+        Usuario usuario = null;
         while(resultSet.next()){
             String nome = resultSet.getString("nome");
-            String cpf = resultSet.getString("cpf");
-            int idade = resultSet.getInt("idade");
-            cliente = new Cliente(id, nome, cpf, idade);
-            cliente.setId(resultSet.getLong("id"));
+            String login = resultSet.getString("login");
+            String senha = resultSet.getString("senha");
+            usuario = new Usuario(nome, login, senha);
+            usuario.setId(resultSet.getLong("id"));
         }
         
         resultSet.close();
         preparedStatement.close();
         connection.close();
-        return cliente;
+        return usuario;
     }
     
     public boolean excluir(Long id) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" DELETE FROM  cliente WHERE id = ? ");
+        sql.append(" DELETE FROM  usuario WHERE id = ? ");
+        
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setLong(1, id);
@@ -99,53 +97,52 @@ public class ClienteDAO {
             preparedStatement.close();
             connection.close();
         }
-        
     }
     
-    public Cliente buscarCliente(String cpf) throws Exception{
+    public Usuario buscarUsuario(String login, String senha) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, nome, cpf, idade FROM cliente where cpf = ? ");
+        sql.append(" SELECT id, nome, login, senha FROM usuario where login = ?  and senha = ? ");
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setString(1, cpf);
+        preparedStatement.setString(1, login);
+        preparedStatement.setString(2, senha);
         ResultSet resultSet = preparedStatement.executeQuery();
-        Cliente cliente = null;
+        Usuario usuario = null;
         while(resultSet.next()){
             String nome = resultSet.getString("nome");
-            int idade = resultSet.getInt("idade");
-            Long id  = resultSet.getLong("id");
-            cliente = new Cliente(id, nome, cpf, idade);
+            usuario = new Usuario(nome, login, senha);
+            usuario.setId(resultSet.getLong("id"));
         }
-        
         resultSet.close();
         preparedStatement.close();
         connection.close();
-        return cliente;
+        return usuario;
     
     }
     
-    public List<Cliente> buscarClientesByNome(String nome) throws Exception{
+    public Usuario buscarUsuarioPorLogin(String login) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, nome, cpf, idade FROM cliente where nome like ? ");
+        sql.append(" SELECT id, nome, login, senha FROM usuario where login = ? ");
+        
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setString(1, "%" + nome + "%");
+        preparedStatement.setString(1, login);
+        
         ResultSet resultSet = preparedStatement.executeQuery();
-        List<Cliente> clientes = new ArrayList<Cliente>();
+        Usuario usuario = null;
         while(resultSet.next()){
-            String nomeCliente = resultSet.getString("nome");
-            int idade = resultSet.getInt("idade");
-            Long id  = resultSet.getLong("id");
-            String cpf = resultSet.getString("cpf");
-            Cliente cliente = new Cliente(id, nome, cpf, idade);
+            String nome = resultSet.getString("nome");
+            String senha = resultSet.getString("senha");
+            usuario = new Usuario(nome, login, senha);
+            usuario.setId(resultSet.getLong("id"));
         }
         
         resultSet.close();
         preparedStatement.close();
         connection.close();
-        return clientes;
-    
+        
+        return usuario;
     }
 }

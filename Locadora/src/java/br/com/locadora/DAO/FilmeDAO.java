@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.locadora;
+package br.com.locadora.DAO;
 
 import br.com.locadora.enums.GeneroEnum;
 import br.com.locadora.model.Ator;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class FilmeDAO {
    
-    
+    AtorDAO atorDAO = new AtorDAO();
     
     public void update(Filme  filme) throws Exception{
         Connection connection = ConexaoUtil.getConnection();
@@ -58,13 +58,31 @@ public class FilmeDAO {
             preparedStatement.setInt(3, filme.getClassificacao());
             preparedStatement.setDouble(4, filme.getPreco());
             preparedStatement.execute();
-        
+            
+            for(Ator ator : filme.getAtores()){
+                ator = atorDAO.inserir(ator);
+                this.salvarRelacaoFilmeAtor(filme, ator, connection);
+            }
+            
             preparedStatement.close();
             connection.close();
         }
         
     }
     
+    
+    
+    private void salvarRelacaoFilmeAtor(Filme filme, Ator ator, Connection connection) throws Exception{
+        StringBuilder sql = new StringBuilder();
+        sql.append(" INSERT INTO filme_ator(filme_id, ator_id) ");
+        sql.append(" VALUES ( ?, ?) ");
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, filme.getId());
+        preparedStatement.setLong(2, ator.getId());
+        preparedStatement.execute();
+        preparedStatement.close();
+    }
     
     public Filme recuperar(Long id) throws Exception{
         
@@ -126,11 +144,40 @@ public class FilmeDAO {
             Double preco = resultSet.getDouble("preco");
             Long id = resultSet.getLong("id");
             Filme filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
             filmes.add(filme);
         }
         resultSet.close();
         preparedStatement.close();
         connection.close();
         return filmes;
-    }    
+    }   
+
+    List<Filme> buscarFilmesPorAluguel(Long idAluguel) throws Exception {
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
+                sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id where af.aluguel_id = ? ");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1,idAluguel); 
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Filme> filmes = new ArrayList<Filme>();
+        while(resultSet.next()){
+            String nome = resultSet.getString("titulo");
+            int genero = resultSet.getInt("genero");
+            int classificacao = resultSet.getInt("classif");
+            Double preco = resultSet.getDouble("preco");
+            Long id = resultSet.getLong("id");
+            Filme filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
+            filmes.add(filme);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return filmes;
+
+    }
+    
 }

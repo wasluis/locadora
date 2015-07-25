@@ -34,6 +34,22 @@ public class Aluguel  implements Serializable{
     //Many-To-One
     private Usuario operador;
 
+    public Aluguel(){
+        super();
+    }
+    
+    public Aluguel(Long id, Date dataAluguel, List<Filme> filmes, Cliente cliente, Double valor, Usuario operador) {
+        this.id = id;
+        this.dataAluguel = dataAluguel;
+        this.filmes = filmes;
+        this.cliente = cliente;
+        this.valor = valor;
+        this.operador = operador;
+    }
+    
+    
+    
+
     public Long getId() {
         return id;
     }

@@ -7,6 +7,7 @@ package br.com.locadora.model;
 
 import br.com.locadora.enums.GeneroEnum;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -24,7 +25,7 @@ public class Filme implements Serializable{
     private String titulo;
     
     //Many-To-Many
-    private Set<Ator> atores;
+    private Set<Ator> atores = new HashSet<Ator>();
     
     private GeneroEnum genero;
     
