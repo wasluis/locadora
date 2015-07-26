@@ -10,6 +10,8 @@ import br.com.locadora.util.ConexaoUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,7 +43,7 @@ public class UsuarioDAO {
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
             sql.append(" INSERT INTO usuario(id, nome, login, senha) ");
-            sql.append(" VALUES ( NEXTVAL('sq_usuario_id'), ?, ?, ?) ");
+            sql.append(" VALUES ( NEXTVAL('SEQ_USER'), ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             preparedStatement.setString(1, c.getNome());
@@ -117,6 +119,7 @@ public class UsuarioDAO {
         resultSet.close();
         preparedStatement.close();
         connection.close();
+        System.out.println(usuario.getLogin() + " "+login);
         return usuario;
     
     }
@@ -144,5 +147,28 @@ public class UsuarioDAO {
         connection.close();
         
         return usuario;
+    }
+    
+    public List<Usuario> getLista() throws Exception{
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT id, nome, login, senha FROM usuario ");
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Usuario> usuarios = new ArrayList<Usuario>();
+        while(resultSet.next()){
+            String nome = resultSet.getString("nome");
+            String login = resultSet.getString("login");
+            String senha = resultSet.getString("senha");
+            Long id= resultSet.getLong("id");
+            usuarios.add(new Usuario(id,nome, login, senha));
+            
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return usuarios;
+    
     }
 }

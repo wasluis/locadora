@@ -18,19 +18,19 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Ã—</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h1 class="text-center">Sistema Movie-UECE</h1>
                     </div>
                     <div class="modal-body">
-                        <form class="form col-md-12 center-block">
+                        <form method="post" action="validaLogin" class="form col-md-12 center-block">
                             <div class="form-group">
-                                <input type="text" class="form-control input-lg" placeholder="Usuario">
+                                <input type="text" class="form-control input-lg" name="username" placeholder="Usuario">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control input-lg" placeholder="Senha">
+                                <input type="password" class="form-control input-lg" name="password" placeholder="Senha">
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-block">Acessar</button>
+                                <input class="btn btn-primary btn-lg btn-block" type="submit" value="Acessar" />
 
                             </div>
                         </form>

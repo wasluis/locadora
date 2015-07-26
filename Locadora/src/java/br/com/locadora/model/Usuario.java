@@ -27,6 +27,12 @@ public class Usuario implements Serializable{
         this.senha = senha;
         this.nome = nome;
     }
+    public Usuario(Long id,String nome, String login, String senha){
+        this.login = login;
+        this.senha = senha;
+        this.nome = nome;
+        this.id = id;
+    }
 
     public Usuario() {}
     
