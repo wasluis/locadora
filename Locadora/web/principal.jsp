@@ -57,6 +57,15 @@
                                             <li><a href="#">One more separated link</a></li>
                                         </ul>
                                     </li>
+                                    
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relatórios <span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Filmes alugados por cliente</a></li>
+                                            <li><a href="#">Ranking de filmes</a></li>
+                                            <li><a href="#">Alugueís por filme</a></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                                 <form class="navbar-form navbar-left" role="search">
                                     <div class="form-group">
