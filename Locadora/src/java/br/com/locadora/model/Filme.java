@@ -24,6 +24,7 @@ public class Filme implements Serializable{
     
     private String titulo;
     
+    
     //Many-To-Many
     private Set<Ator> atores = new HashSet<Ator>();
     

@@ -7,6 +7,7 @@ package br.com.locadora.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import org.kohsuke.rngom.digested.Main;
 
 /**
  *
@@ -16,7 +17,7 @@ public class ConexaoUtil {
     
     public static Connection getConnection() throws Exception{
         Connection connection = null;
-        String url = "jdbc:postgresql://localhost:5433/Locadora";
+        String url = "jdbc:postgresql://localhost:5432/Locadora";
         String login = "postgres";
         String senha = "postgres";
         Class.forName("org.postgresql.Driver");
@@ -25,4 +26,6 @@ public class ConexaoUtil {
         return connection;
   
     }
+    
+    
 }

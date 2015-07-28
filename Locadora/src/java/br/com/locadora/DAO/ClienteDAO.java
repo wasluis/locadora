@@ -45,7 +45,7 @@ public class ClienteDAO {
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
             sql.append(" INSERT INTO cliente(id, nome, cpf, idade) ");
-            sql.append(" VALUES ( NEXTVAL('sq_cliente_id'), ?, ?, ?) ");
+            sql.append(" VALUES ( NEXTVAL('SEQ_USER'), ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             preparedStatement.setString(1, c.getNome());
