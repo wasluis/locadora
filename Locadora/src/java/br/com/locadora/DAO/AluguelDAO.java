@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -138,7 +139,7 @@ public class AluguelDAO {
      */
     public double devolucao(Cliente cliente, Date dataDevolucao) throws Exception{
         Aluguel aluguelPendente = this.buscarAluguelPendente(cliente);
-        Double valorTotal = calcularValorTotal(aluguelPendente, dataDevolucao);
+        Double valorTotal = this.calcularValorTotal(aluguelPendente, dataDevolucao);
         
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE aluguel set data_devolucao = ? where cliente_id = ? AND data_devolucao is null");
@@ -170,6 +171,39 @@ public class AluguelDAO {
         return valorTotal;
     }
     
+    /**
+     * Listar os alugueis por filme
+     * @param filme
+     * @return
+     * @throws Exception 
+     */
+    public List<Aluguel> listarAlugueisPorFilme(Filme filme) throws Exception{
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT id, data_aluguel, data_devolucao, valor FROM aluguel a "); 
+        sql.append(" INNER JOIN aluguel_filme af ON af.aluguel_id = a.id  INNER JOIN filme f ON f.id = af.filme_id ") ;
+        sql.append(" where f.id = ? ");
+        sql.append(" GROUP BY id, data_aluguel, data_devolucao, valor ");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, filme.getId());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        List<Aluguel> alugueis = new ArrayList<Aluguel>();
+        while(resultSet.next()){
+            Aluguel aluguel = new Aluguel();
+            aluguel.setId(resultSet.getLong("id"));
+            aluguel.setDataAluguel(resultSet.getDate("data_aluguel"));
+            aluguel.setDataDevolucao(resultSet.getDate("data_devolucao"));
+            aluguel.setValor(resultSet.getDouble("valor"));
+            alugueis.add(aluguel);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return alugueis;
+    }
     
     
 }

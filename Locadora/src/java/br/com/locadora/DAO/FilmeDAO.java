@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -179,6 +180,12 @@ public class FilmeDAO {
 
     }
 
+    /**
+     * Listar todos os filmes
+     * @return
+     * @throws SQLException
+     * @throws Exception 
+     */
     public List<Filme> getLista() throws SQLException, Exception {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT id, titulo, genero_enum, classificacao, preco FROM filme ");
@@ -273,4 +280,34 @@ public class FilmeDAO {
         connection.close();
         return filmes;    
     }
+    
+    
+    public List<Filme> listarRankingFilmes() throws Exception{
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT count(*) ocorrencias, f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
+            sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
+            sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
+            sql.append(" ORDER BY count(*) DESC ");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Filme> filmes = new LinkedList<Filme>();
+        while(resultSet.next()){
+            String nome = resultSet.getString("titulo");
+            int genero = resultSet.getInt("genero");
+            int classificacao = resultSet.getInt("classif");
+            Double preco = resultSet.getDouble("preco");
+            Long id = resultSet.getLong("id");
+            Filme filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
+            filmes.add(filme);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return filmes;    
+    } 
+    
 }
