@@ -208,4 +208,41 @@ public class FilmeDAO {
         return filmes;
     }
 
+    public List<Filme> sugerirFilmes(Filme filme) throws Exception{
+        
+        String atores = new String();
+        for(Ator ator : filme.getAtores()){
+            atores += "|" + ator.getNome();
+        }
+        atores = atores.replaceFirst("|", atores);
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
+            sql.append(" INNER JOIN f.filme_ator fa ON fa.filme_id = f.id INNER JOIN ator a on a.id = fa.ator_id ");
+            sql.append(" where f.genero_enum = ? OR UPPER(a.nome) SIMILAR TO '%(" + atores + ")%'");
+            sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setInt(1, filme.getGenero().ordinal()); 
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Filme> filmes = new ArrayList<Filme>();
+        while(resultSet.next()){
+            String nome = resultSet.getString("titulo");
+            int genero = resultSet.getInt("genero");
+            int classificacao = resultSet.getInt("classif");
+            Double preco = resultSet.getDouble("preco");
+            Long id = resultSet.getLong("id");
+            Filme filmeSugerido = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filmeSugerido.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
+            filmes.add(filmeSugerido);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return filmes;
+    }
+    
+    
+    
 }
