@@ -7,6 +7,7 @@ package br.com.locadora.DAO;
 
 import br.com.locadora.enums.GeneroEnum;
 import br.com.locadora.model.Ator;
+import br.com.locadora.model.Cliente;
 import br.com.locadora.model.Filme;
 import br.com.locadora.util.ConexaoUtil;
 import java.sql.Connection;
@@ -216,5 +217,32 @@ public class FilmeDAO {
     }
     
     
-    
+    public List<Filme> listarFilmesPorCliente(Cliente cliente) throws Exception{
+        
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
+            sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
+            sql.append(" where a.cliente_id = ? ");
+            sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
+        
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, cliente.getId()); 
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Filme> filmes = new ArrayList<Filme>();
+        while(resultSet.next()){
+            String nome = resultSet.getString("titulo");
+            int genero = resultSet.getInt("genero");
+            int classificacao = resultSet.getInt("classif");
+            Double preco = resultSet.getDouble("preco");
+            Long id = resultSet.getLong("id");
+            Filme filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
+            filmes.add(filme);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+        return filmes;    
+    }
 }
