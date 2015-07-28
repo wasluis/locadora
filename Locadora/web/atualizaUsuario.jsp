@@ -11,44 +11,37 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <title>JSP Page</title>
+        <title>Atualizar</title>
     </head>
     <body>
         <div class="navbar-wrapper">
            <c:import url="header.jsp"/>
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-lg-12">
-
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-4">
 
                 </div>
                 <div class="col-lg-4">
                     <div class="well bs-component">
-                        <form class="form-horizontal" action="usuarioMvc">
-                            <input type="hidden" name="logica" value="AdicionaUsuario">
+                        <form class="form-horizontal" action="usuarioMvc?id=${id}">
+                            <input type="hidden" name="logica" value="AtualizaUsuario">
                             <fieldset>
-                                <legend>Novo Usuário</legend>
+                                <legend>Usuário</legend>
                                 <div class="form-group">
                                     <label for="inputPassword" class="col-lg-2 control-label">Nome</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="nome" class="form-control" id="inputPassword" placeholder="Nome">                    
+                                        <input type="text" name="nome" class="form-control" id="inputPassword" placeholder="Nome" value="${Nome}">                    
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail" class="col-lg-2 control-label">Login</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="login" class="form-control" id="inputEmail" placeholder="Login">
+                                        <input type="text" name="login" class="form-control" id="inputEmail" placeholder="Login" value="${Login}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword" class="col-lg-2 control-label">Senha</label>
                                     <div class="col-lg-10">
-                                        <input type="password"  name="senha" class="form-control" id="inputPassword" placeholder="Senha">                    
+                                        <input type="password"  name="senha" class="form-control" id="inputPassword" placeholder="Senha" value="${Senha}">                    
                                     </div>
                                 </div>
 

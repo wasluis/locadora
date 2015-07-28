@@ -5,8 +5,11 @@
  */
 package br.com.locadora.logicas;
 
+import br.com.locadora.DAO.FilmeDAO;
 import br.com.locadora.DAO.UsuarioDAO;
+import br.com.locadora.model.Filme;
 import br.com.locadora.model.Usuario;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,23 +17,19 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author diegogomestome
  */
-public class RemoveUsuarioLogica implements Logica {
+public class ListaFilmesLogica implements Logica {
 
   @Override
   public String executa(HttpServletRequest req, HttpServletResponse res)
-      throws Exception {
+        throws Exception {
 
-    long id = Long.parseLong(req.getParameter("id"));
+      // Monta a lista de contatos
+      List<Filme> filmes = new FilmeDAO().getLista();
 
-    Usuario usuario = new Usuario();
-    usuario.setId(id);
-
-      UsuarioDAO dao = new UsuarioDAO();
-    dao.excluir(usuario.getId());
-
-    System.out.println("Excluindo usuario... ");
-
-    return "usuarioMvc?logica=ListaUsuarios";
+      // Guarda a lista no request
+      req.setAttribute("filmes", filmes);
+      System.out.println("Listando filmes... ");
+  
+      return "/lista-filmes.jsp";
   }
-
 }

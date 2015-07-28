@@ -26,6 +26,7 @@ public class ListaUsuariosLogica implements Logica {
 
       // Guarda a lista no request
       req.setAttribute("usuarios", usuarios);
+      System.out.println("Listando usuario... ");
   
       return "/lista-usuarios.jsp";
   }

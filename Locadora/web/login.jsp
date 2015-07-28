@@ -36,6 +36,18 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <div class="media">
+                            <div class="media-middle">
+                                <a href="#">
+                                    
+                                     <h4 class="media-heading" align="center">Frameworks</h4>
+                                </a>
+                            </div>
+                            <center>
+                               
+                                <img class="media-object" src="images/uece.png" alt="...">
+                            </center>
+                        </div>
                     </div>
                 </div>
             </div>
