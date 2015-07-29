@@ -25,16 +25,18 @@ public class AdicionaFilmeLogica implements Logica {
 
 
         String titulo = req.getParameter("titulo");
-        int classificacao= Integer.parseInt(req.getParameter("classificacao"));
+        int classificacao= Integer.parseInt(req.getParameter("classificacao").substring(0, 2).trim());
         int genero= Integer.parseInt(req.getParameter("genero").substring(0, 2).trim());
         Double preco = new Double(req.getParameter("preco"));
+        Long id = null;
+        if(req.getParameter("id") != null && !req.getParameter("id").trim().equals("")){
+            id = Long.parseLong(req.getParameter("id"));
+        }
 
-        Filme filme = new Filme( new Long(0),  titulo, GeneroEnum.fromOrdinal(genero), classificacao,  preco); 
+        Filme filme = new Filme( id,  titulo, GeneroEnum.fromOrdinal(genero), classificacao,  preco); 
 
         FilmeDAO dao = new FilmeDAO();
         dao.inserir(filme);
-
-        System.out.println("Adicionando filme... ");
 
         return "filmeMvc?logica=ListaFilmes";
     }

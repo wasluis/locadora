@@ -38,28 +38,28 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="well bs-component">
-                        <form class="form-horizontal" action="filmeMvc">
+                        <form class="form-horizontal" action="filmeMvc" method="post">
                             <input type="hidden" name="logica" value="AdicionaFilme">
+                            <input type="hidden" name="id" value="${param.id}">
+
                             <fieldset>
                                 <legend>Novo Filme</legend>
                                 <div class="form-group">
                                     <label for="inputTitulo" class="col-lg-2 control-label">Titulo</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="titulo" class="form-control" id="inputPassword" placeholder="Titulo">                    
+                                        <input type="text" value="${param.titulo}" name="titulo" class="form-control" id="inputTitulo" placeholder="Titulo">                    
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAtores" class="col-lg-2 control-label">Atores</label>
                                     <div class="col-lg-10">
-                                        <textarea name="atores" class="form-control" rows="3"></textarea>
+                                        <textarea name="atores" id="inputAtores" class="form-control" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Gênero</label>
+                                    <label for="generoSelect" class="col-lg-2 control-label">Gênero</label>
                                     <div class="col-lg-10">
-
-
-                                        <select name="genero" class="form-control" id="sel1">
+                                        <select name="genero"  class="form-control" id="generoSelect">
                                             <option>1 - ACAO</option>
                                             <option>2 - ADULTO</option>
                                             <option>3 - ANIMACAO</option>
@@ -78,14 +78,14 @@
 
 
                                 <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-3 control-label">Classificacão</label>
+                                    <label for="classificacao" class="col-lg-3 control-label">Classificacão</label>
                                     <div class="col-lg-9 right">
-                                        <select name="classificacao" class="form-control" id="sel1">
+                                        <select  name="classificacao"  class="form-control" id="classificacao">
                                             <option>0 anos</option>
                                             <option>12 anos</option>
                                             <option>14 anos</option>
                                             <option>16 anos</option>
-                                            <option>18 anos</option>
+                                            <option selected="selected">18 anos</option>
                                         </select>
                                     </div>
                                 </div>
@@ -93,14 +93,14 @@
                                 <div class="form-group">
                                     <label for="inputPreco" class="col-lg-2 control-label">Preço</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="preco" class="form-control" id="inputPassword" placeholder="Preço">                    
+                                        <input type="text" value="${param.preco}" name="preco" class="form-control" id="inputPreco" placeholder="Preço">                    
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-lg-12 col-lg-offset-6">
                                         <button type="reset" class="btn btn-danger">Cancelar</button>
-                                        <button type="submit" class="btn btn-info">Adicionar</button>
+                                        <button type="submit" class="btn btn-info">Salvar</button>
                                     </div>
                                 </div>
                             </fieldset>

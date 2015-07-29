@@ -52,7 +52,7 @@ public class FilmeDAO {
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
             sql.append(" INSERT INTO filme(id, titulo, genero_enum, classificacao, preco) ");
-            sql.append(" VALUES ( NEXTVAL('SEQ_USER'), ?, ?, ?, ?) ");
+            sql.append(" VALUES ( NEXTVAL('sq_filme_id'), ?, ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             preparedStatement.setString(1, filme.getTitulo());

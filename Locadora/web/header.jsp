@@ -31,7 +31,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Filmes <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/Locadora/adicionaFilme.jsp">Novo</a></li>
-                                <li><a href="/Locadora/lista-filmes.jsp">Buscar</a></li>
+                                <li><a href="/Locadora/filmeMvc?logica=ListaFilmes">Buscar</a></li>
                             </ul>
                         </li>
                     </ul>
