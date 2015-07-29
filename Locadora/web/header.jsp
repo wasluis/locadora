@@ -23,24 +23,16 @@
                         <li class="active"><a href="principal.jsp">Inicio <span class="sr-only">(current)</span></a></li>
                         <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Clientes <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/Locadora/adicionaUsuario.jsp">Novo</a></li>
-                                <li><a href="#">Buscar</a></li>
+                                <li><a href="/Locadora/adicionaCliente.jsp">Novo</a></li>
+                                <li><a href="/Locadora/clienteMvc?logica=ListaClientes">Buscar</a></li>
                                 <li><a href="#">Editar</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
                             </ul></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Filmes <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Adicionar</a></li>
-                                <li><a href="#">Buscar</a></li>
+                                <li><a href="/Locadora/adicionaFilme.jsp">Novo</a></li>
+                                <li><a href="/Locadora/lista-filmes.jsp">Buscar</a></li>
                                 <li><a href="#">Editar</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
                             </ul>
                         </li>
                     </ul>

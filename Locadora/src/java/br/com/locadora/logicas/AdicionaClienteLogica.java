@@ -26,8 +26,11 @@ public class AdicionaClienteLogica implements Logica {
         String nome = req.getParameter("nome");
         String cpf = req.getParameter("cpf");
         int idade = Integer.parseInt(req.getParameter("idade"));
-
-       Cliente cliente = new Cliente(new Long(0),nome,cpf,idade);
+        Long id = null;
+        if(req.getParameter("id") != null){
+            id = Long.parseLong(req.getParameter("id"));
+        }
+       Cliente cliente = new Cliente(id ,nome,cpf,idade);
 
         ClienteDAO dao = new ClienteDAO();
         dao.inserir(cliente);

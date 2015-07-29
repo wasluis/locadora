@@ -5,6 +5,7 @@
  */
 package br.com.locadora.DAO;
 
+import br.com.locadora.exception.DuplicateRecordException;
 import br.com.locadora.model.Cliente;
 import br.com.locadora.util.ConexaoUtil;
 import java.sql.Connection;
@@ -42,10 +43,13 @@ public class ClienteDAO {
             this.update(c);
         }
         else{
+            if(this.buscarCliente(c.getCPF()) != null){
+                throw new DuplicateRecordException();
+            }
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
             sql.append(" INSERT INTO cliente(id, nome, cpf, idade) ");
-            sql.append(" VALUES ( NEXTVAL('SEQ_USER'), ?, ?, ?) ");
+            sql.append(" VALUES ( NEXTVAL('sq_cliente_id'), ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
             preparedStatement.setString(1, c.getNome());
@@ -57,6 +61,7 @@ public class ClienteDAO {
             connection.close();
         }
         
+
     }
     
     
@@ -125,13 +130,19 @@ public class ClienteDAO {
     
     }
     
-    public List<Cliente> buscarClientesByNome(String nome) throws Exception{
+    public List<Cliente> buscarClientes(Cliente clienteFiltro) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, nome, cpf, idade FROM cliente where nome like ? ");
+        sql.append(" SELECT id, nome, cpf, idade FROM cliente ");
+        
+        if(clienteFiltro.getNome() != null && !clienteFiltro.getNome().trim().equals("")){
+            sql.append(" where nome like ? ");
+        }
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setString(1, "%" + nome + "%");
+        if(clienteFiltro.getNome() != null && !clienteFiltro.getNome().trim().equals("")){
+            preparedStatement.setString(1, "%" + clienteFiltro.getNome() + "%");
+        }
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Cliente> clientes = new ArrayList<Cliente>();
         while(resultSet.next()){
@@ -139,7 +150,8 @@ public class ClienteDAO {
             int idade = resultSet.getInt("idade");
             Long id  = resultSet.getLong("id");
             String cpf = resultSet.getString("cpf");
-            Cliente cliente = new Cliente(id, nome, cpf, idade);
+            Cliente cliente = new Cliente(id, nomeCliente, cpf, idade);
+            clientes.add(cliente);
         }
         
         resultSet.close();

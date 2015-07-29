@@ -16,32 +16,40 @@
     <body>
         <div class="navbar-wrapper">
            <c:import url="header.jsp"/>
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-4">
 
                 </div>
                 <div class="col-lg-4">
                     <div class="well bs-component">
-                        <form class="form-horizontal" action="clienteMvc">
+                        <form class="form-horizontal" action="clienteMvc" method="post">
                             <input type="hidden" name="logica" value="AdicionaCliente">
+                            <input type="hidden" name="id" value="${param.id}">
                             <fieldset>
                                 <legend>Novo Cliente</legend>
                                 <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Nome</label>
+                                    <label for="inputNome" class="col-lg-2 control-label">Nome</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="nome" class="form-control" id="inputPassword" placeholder="Nome">                    
+                                        <input type="text" value="${param.nome}" name="nome" class="form-control" id="inputNome" placeholder="Nome">                    
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputCPF" class="col-lg-2 control-label">Cpf</label>
                                     <div class="col-lg-10">
-                                        <input type="text" name="log" class="form-control" id="inputEmail" placeholder="Login">
+                                        <input type="text" value="${param.cpf}" name="cpf" class="form-control" id="inputCPF" placeholder="CPF">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword" class="col-lg-2 control-label">Idade</label>
+                                    <label for="inputIdade" class="col-lg-2 control-label">Idade</label>
                                     <div class="col-lg-10">
-                                        <input type="text"  name="senha" class="form-control" id="inputPassword" placeholder="Senha">                    
+                                        <input type="text"  value="${param.idade}" name="idade" class="form-control" id="inputIdade" placeholder="Idade">                    
                                     </div>
                                 </div>
 
@@ -50,7 +58,7 @@
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
                                         <button type="reset" class="btn btn-default">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </div>
                             </fieldset>
