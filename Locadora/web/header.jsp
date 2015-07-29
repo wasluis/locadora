@@ -25,14 +25,13 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/Locadora/adicionaCliente.jsp">Novo</a></li>
                                 <li><a href="/Locadora/clienteMvc?logica=ListaClientes">Buscar</a></li>
-                                <li><a href="#">Editar</a></li>
+                               
                             </ul></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Filmes <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/Locadora/adicionaFilme.jsp">Novo</a></li>
                                 <li><a href="/Locadora/lista-filmes.jsp">Buscar</a></li>
-                                <li><a href="#">Editar</a></li>
                             </ul>
                         </li>
                     </ul>
