@@ -12,6 +12,10 @@
         <servlet-name>UsuarioController</servlet-name>
         <servlet-class>br.com.locadora.controllers.UsuarioController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AluguelMvc</servlet-name>
+        <servlet-class>br.com.locadora.controllers.AluguelMvc</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
         <url-pattern>/validaLogin</url-pattern>
@@ -26,6 +30,10 @@
     <servlet-mapping>
         <servlet-name>UsuarioController</servlet-name>
         <url-pattern>/usuarioMvc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AluguelMvc</servlet-name>
+        <url-pattern>/AluguelMvc</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

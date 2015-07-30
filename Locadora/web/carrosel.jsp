@@ -41,7 +41,7 @@
                                     <img class="center-block" src="images/olobo_leonardo.jpg" alt="...">
 
                                         <div class="carousel-caption">
-                                            ...
+                                           Filmes em Promoção!
                                         </div>
                                 </div>
 

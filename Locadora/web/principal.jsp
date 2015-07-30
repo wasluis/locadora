@@ -10,15 +10,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-            <title>Logado</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/jquery-ui.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+
+        <title>Principal</title>
     </head>
     <body>
 
         <div class="navbar-wrapper">
 
             <c:import url="header.jsp"/>
-          
+
 
 
             <div class="page-header">
@@ -34,12 +43,28 @@
 
                     </div>
                     <div class="col-lg-8">
-                        <button class="btn btn-info center-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-info col-lg-4" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
                             Realizar Aluguel
                         </button>
-                        <div class="collapse" id="collapseExample">
+                        <button class="btn btn-inverse col-lg-4" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                            Realizar Devolução
+                        </button>
+                        <button class="btn btn-info col-lg-4" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
+                            Sugerir Filme
+                        </button>
+                        <div class="collapse" id="collapseExample1">
                             <div class="well">
-                                ...
+                                <c:import url="aluga.jsp"/>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseExample2">
+                            <div class="well">
+                                <c:import url="devolucao.jsp"/>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapseExample3">
+                            <div class="well">
+                                <c:import url="sugestao.jsp"/>
                             </div>
                         </div>
                     </div>
@@ -48,11 +73,18 @@
                     </div>
                 </div>
             </div>
-            <%-- <c:import url="carrosel.jsp"/> Carousel --%>
+            <div class="container">
+                <div class="row">
+                    <%
+                        if (request.getAttribute("retorno") != null) {
+                    %>
+                    <div class="alert alert-danger" role="alert">${retorno}</div>
+                    <%}%>
+                </div>
+            
 
-        </div>
+            </div>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+
     </body>
 </html>
