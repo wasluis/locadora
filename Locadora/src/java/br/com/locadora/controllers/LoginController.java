@@ -48,12 +48,15 @@ public class LoginController extends HttpServlet {
         //se nao encontrou usuario no banco, redireciona para a pagina de erro!
         if (user == null) {
             session.invalidate();
-            request.getRequestDispatcher("erroLogin.jsp").forward(request, response);
+            request.setAttribute("error", "true");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
         } else {
             //se o dao retornar um usuario, coloca o mesmo na sessao
             session.setAttribute("user", user);
             request.setAttribute("user", user);
             request.getRequestDispatcher("principal.jsp").forward(request, response);
+            return;
         }
     }
 

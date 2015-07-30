@@ -23,6 +23,15 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" action="validaLogin" class="form col-md-12 center-block">
+                            <%
+                                if(request.getAttribute("error") == "true"){
+                            %>    
+                            <div class="alert alert-danger" >
+                                <strong>Login Inválido!</strong>
+                            </div>
+                            <%
+                                }    
+                            %>        
                             <div class="form-group">
                                 <input type="text" class="form-control input-lg" name="username" placeholder="Usuario">
                             </div>
