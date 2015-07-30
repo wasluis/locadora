@@ -15,6 +15,7 @@
     </head>
     <body>
         <div class="navbar-wrapper">
+         
            <c:import url="header.jsp"/>
             <div class="page-header">
                 <div class="row">
@@ -25,7 +26,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-4">
-
+                       
                 </div>
                 <div class="col-lg-4">
                     <div class="well bs-component">

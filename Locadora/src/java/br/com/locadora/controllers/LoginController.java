@@ -54,6 +54,7 @@ public class LoginController extends HttpServlet {
         } else {
             //se o dao retornar um usuario, coloca o mesmo na sessao
             session.setAttribute("user", user);
+            session.setAttribute("login", user.getLogin());
             request.setAttribute("user", user);
             request.getRequestDispatcher("principal.jsp").forward(request, response);
             return;

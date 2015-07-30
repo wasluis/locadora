@@ -40,9 +40,13 @@
                             <input type="text" class="form-control" placeholder="Filme">
                         </div>
                         <button type="submit" class="btn btn-default">Buscar</button>
+                        
                     </form>
+                   
                     <ul class="nav navbar-nav navbar-right">
-                        <li> </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" href="#">Operador: <%=request.getSession().getAttribute("login") %></a>
+                        </li>
                     </ul>
                 </div>
             </div>

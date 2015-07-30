@@ -53,7 +53,7 @@
                                 <div class="form-group">
                                     <label for="inputAtores" class="col-lg-2 control-label">Atores</label>
                                     <div class="col-lg-10">
-                                        <textarea  name="atores" id="inputAtores" class="form-control" rows="3">${param.atores}</textarea>
+                                        <textarea  placeholder="Atores (separados por vírgula)" name="atores" id="inputAtores" class="form-control" rows="3">${param.atores}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
