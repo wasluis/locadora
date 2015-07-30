@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author diegogomestome
  */
-public class ListaFilmesLogica implements Logica {
+public class SugerirFilmesLogica implements Logica {
 
   @Override
   public String executa(HttpServletRequest req, HttpServletResponse res)
@@ -26,15 +26,17 @@ public class ListaFilmesLogica implements Logica {
 
       // Monta a lista de contatos
       List<Filme> filmes = new ArrayList<Filme>();
-      if(req.getParameter("titulo") != null && !req.getParameter("titulo").equals("") ){
-          filmes = new FilmeDAO().buscarFilme(req.getParameter("titulo"));
-      }
-      else{
-          filmes =  new FilmeDAO().getLista();   
+      Filme filme = new Filme();
+      
+      if(req.getParameter("codigo") != null && !req.getParameter("codigo").equals("") ){
+          filme.setId(Long.parseLong(req.getParameter("codigo")));
+          filmes = new FilmeDAO().sugerirFilmes(filme);
       }
       // Guarda a lista no request
       req.setAttribute("filmes", filmes);
+      req.setAttribute("exibirSugestao", "true");
+      
   
-      return "/listaFilmes.jsp";
+      return "/principal.jsp";
   }
 }

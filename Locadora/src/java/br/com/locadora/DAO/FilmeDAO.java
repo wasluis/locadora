@@ -133,6 +133,7 @@ public class FilmeDAO {
             int classificacao = resultSet.getInt("classificacao");
             Double preco = resultSet.getDouble("preco");
             filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
         }
 
         resultSet.close();
@@ -164,7 +165,7 @@ public class FilmeDAO {
     public List<Filme> buscarFilme(String titulo) throws Exception {
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, titulo, genero_enum, classificacao, preco FROM filme where titulo like ? ");
+        sql.append(" SELECT id, titulo, genero_enum, classificacao, preco FROM filme where titulo ilike ? ");
 
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
@@ -252,16 +253,16 @@ public class FilmeDAO {
     }
 
     public List<Filme> sugerirFilmes(Filme filme) throws Exception{
-        
+        filme = this.recuperar(filme.getId());
         String atores = new String();
         for(Ator ator : filme.getAtores()){
             atores += "|" + ator.getNome();
         }
-        atores = atores.replaceFirst("|", atores);
+        atores = atores.replaceFirst("|", "");
         
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
-            sql.append(" INNER JOIN f.filme_ator fa ON fa.filme_id = f.id INNER JOIN ator a on a.id = fa.ator_id ");
+            sql.append(" INNER JOIN filme_ator fa ON fa.filme_id = f.id INNER JOIN ator a on a.id = fa.ator_id ");
             sql.append(" where f.genero_enum = ? OR UPPER(a.nome) SIMILAR TO '%(" + atores + ")%'");
             sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
         

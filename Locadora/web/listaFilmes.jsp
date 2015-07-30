@@ -22,6 +22,14 @@
                 <div class="row">
                 </div>
             </div>
+            <form class="navbar-form  container" style="margin-left: 100px;" role="search" action="filmeMvc">
+                <input type="hidden" name="logica" value="ListaFilmes"/>
+                <div class="form-group">
+                    <input type="text" name="titulo" class="form-control" placeholder="Título do filme">
+                </div>
+                <button type="submit" class="btn btn-default">Buscar</button>
+
+            </form>
             <div class="container">
 
 
@@ -29,6 +37,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Código</th>
                             <th>Título</th>
                             <th>Gênero</th>
                             <th>Atores</th>
@@ -43,6 +52,9 @@
                         <c:forEach var="filme" items="${filmes}">
                             <tr class="success">
                                 <td></td>
+                                <td>
+                                    ${filme.id}
+                                </td>
                                 <td>
                                     ${filme.titulo}
                                 </td>

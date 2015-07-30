@@ -94,6 +94,77 @@
 
 
             </div>
+                
+            <%
+                if (request.getAttribute("exibirSugestao") == "true") {
+            %>
+           
+
+            <div class="well bs-component" style="margin-top: 25px; margin-left: 75px; margin-right: 75px;">
+
+
+                <fieldset>
+                    <legend>Sugestão de filmes</legend>
+
+
+                    <div class="container">
+
+
+                        <table class="table table-striped table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Código</th>
+                                    <th>Título</th>
+                                    <th>Gênero</th>
+                                    <th>Atores</th>
+                                    <th>Classificação</th>
+                                    <th>Preço</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <c:forEach var="filme" items="${filmes}">
+                                    <tr class="success">
+                                        <td></td>
+                                        <td>
+                                            ${filme.id}
+                                        </td>
+                                        <td>
+                                            ${filme.titulo}
+                                        </td>
+
+                                        <td>
+                                            ${filme.genero.toString()}
+                                        </td>
+
+                                        <td>
+                                            ${filme.atoresFormatado()}
+                                        </td>
+
+                                        <td>
+                                            ${filme.classificacao}
+                                        </td>
+
+
+                                        <td>
+                                            ${filme.preco}
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+                </fieldset>
+
+            </div>
+            <%}%>
+    
 
 
     </body>
