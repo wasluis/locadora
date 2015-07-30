@@ -37,6 +37,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Código</th>
                             <th>Título</th>
                             <th>Gênero</th>
                             <th>Atores</th>
@@ -51,6 +52,9 @@
                         <c:forEach var="filme" items="${filmes}">
                             <tr class="success">
                                 <td></td>
+                                <td>
+                                    ${filme.id}
+                                </td>
                                 <td>
                                     ${filme.titulo}
                                 </td>

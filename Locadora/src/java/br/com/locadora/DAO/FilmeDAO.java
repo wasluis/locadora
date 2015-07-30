@@ -133,6 +133,7 @@ public class FilmeDAO {
             int classificacao = resultSet.getInt("classificacao");
             Double preco = resultSet.getDouble("preco");
             filme = new Filme(id, nome, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+            filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
         }
 
         resultSet.close();
@@ -252,7 +253,7 @@ public class FilmeDAO {
     }
 
     public List<Filme> sugerirFilmes(Filme filme) throws Exception{
-        
+        filme = this.recuperar(filme.getId());
         String atores = new String();
         for(Ator ator : filme.getAtores()){
             atores += "|" + ator.getNome();
