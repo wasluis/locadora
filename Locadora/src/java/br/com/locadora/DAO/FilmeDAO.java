@@ -191,7 +191,7 @@ public class FilmeDAO {
     List<Filme> buscarFilmesPorAluguel(Long idAluguel) throws Exception {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
-        sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id where af.aluguel_id = ? ");
+        sql.append(" INNER JOIN aluguel_filme af ON af.filme_id = f.id where af.aluguel_id = ? ");
 
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
