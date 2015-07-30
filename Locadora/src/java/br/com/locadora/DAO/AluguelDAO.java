@@ -80,7 +80,7 @@ public class AluguelDAO {
         preparedStatement.setTimestamp(2, new Timestamp(dataAluguel.getTime()));
         preparedStatement.setLong(3, cliente.getId());
         preparedStatement.setDouble(4, valor);
-        preparedStatement.setLong(5, usuario.getId());
+        preparedStatement.setLong(5, 1);
         preparedStatement.execute();
         
         sql.setLength(0);
