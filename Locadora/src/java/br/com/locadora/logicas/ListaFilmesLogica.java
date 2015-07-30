@@ -26,8 +26,8 @@ public class ListaFilmesLogica implements Logica {
 
       // Monta a lista de contatos
       List<Filme> filmes = new ArrayList<Filme>();
-      if(req.getParameter("titulo") != null && !req.getParameter("titulo").equals("") ){
-          filmes = new FilmeDAO().buscarFilme(req.getParameter("titulo"));
+      if(req.getParameter("tituloFiltro") != null && !req.getParameter("tituloFiltro").trim().equals("") ){
+          filmes = new FilmeDAO().buscarFilme(req.getParameter("tituloFiltro"));
       }
       else{
           filmes =  new FilmeDAO().getLista();   

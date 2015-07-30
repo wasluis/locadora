@@ -15,17 +15,17 @@ public enum GeneroEnum {
 
     public static GeneroEnum fromOrdinal(int ordinal){
         switch(ordinal){
-            case 1 : return ACAO;
-            case 2 : return ADULTO;
-            case 3 : return ANIMACAO;
-            case 4 : return AVENTURA;
-            case 5 : return COMEDIA;
-            case 6 : return DANCA;
-            case 7 : return DOCUMENTARIO;
-            case 8 : return DRAMA;
-            case 9 : return ROMANCE;
-            case 10 : return SUSPENSE;
-            case 11 : return TERROR;
+            case 0 : return ACAO;
+            case 1 : return ADULTO;
+            case 2 : return ANIMACAO;
+            case 3 : return AVENTURA;
+            case 4 : return COMEDIA;
+            case 5 : return DANCA;
+            case 6 : return DOCUMENTARIO;
+            case 7 : return DRAMA;
+            case 8 : return ROMANCE;
+            case 9 : return SUSPENSE;
+            case 10 : return TERROR;
             default : return null;
         } 
     }   

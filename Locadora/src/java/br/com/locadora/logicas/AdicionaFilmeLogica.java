@@ -34,7 +34,7 @@ public class AdicionaFilmeLogica implements Logica {
         if(req.getParameter("id") != null && !req.getParameter("id").trim().equals("")){
             id = Long.parseLong(req.getParameter("id"));
         }
-        Filme filme = new Filme( id,  titulo, GeneroEnum.fromOrdinal(genero), classificacao,  preco);
+        Filme filme = new Filme( id,  titulo, GeneroEnum.fromOrdinal(genero-1), classificacao,  preco);
         
         String[] atores = req.getParameter("atores").split(",");
         for(String nome : atores){
