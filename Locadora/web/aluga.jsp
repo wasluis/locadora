@@ -52,7 +52,7 @@
 
             <div id="film">
                 <div class="form-group" >
-                    <label for="inputPassword" class="col-lg-2 control-label">Cod Filme</label>
+                    <label for="inputPassword" class="col-lg-2 control-label">Codigo Filme</label>
                     <div class="col-lg-10">
 
 
