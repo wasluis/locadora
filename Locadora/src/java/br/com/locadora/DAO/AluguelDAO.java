@@ -180,14 +180,15 @@ public class AluguelDAO {
     public List<Aluguel> listarAlugueisPorFilme(Filme filme) throws Exception{
         
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, data_aluguel, data_devolucao, valor FROM aluguel a "); 
+        sql.append(" SELECT a.id id, a.data_aluguel data_aluguel, a.data_devolucao data_devolucao, a.valor valor, c.nome nome FROM aluguel a "); 
         sql.append(" INNER JOIN aluguel_filme af ON af.aluguel_id = a.id  INNER JOIN filme f ON f.id = af.filme_id ") ;
-        sql.append(" where f.id = ? ");
-        sql.append(" GROUP BY id, data_aluguel, data_devolucao, valor ");
+        sql.append(" INNER JOIN cliente c on c.id = a.cliente_id ") ;
+        sql.append(" where f.titulo like ? ");
+        sql.append(" GROUP BY a.id, a.data_aluguel, a.data_devolucao, a.valor, c.nome ");
         
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setLong(1, filme.getId());
+        preparedStatement.setString(1, "%" + filme.getTitulo() + "%");
         ResultSet resultSet = preparedStatement.executeQuery();
         
         List<Aluguel> alugueis = new ArrayList<Aluguel>();
@@ -197,6 +198,9 @@ public class AluguelDAO {
             aluguel.setDataAluguel(resultSet.getDate("data_aluguel"));
             aluguel.setDataDevolucao(resultSet.getDate("data_devolucao"));
             aluguel.setValor(resultSet.getDouble("valor"));
+            Cliente cliente = new Cliente();
+            cliente.setNome(resultSet.getString("nome"));
+            aluguel.setCliente(cliente);
             alugueis.add(aluguel);
         }
         resultSet.close();

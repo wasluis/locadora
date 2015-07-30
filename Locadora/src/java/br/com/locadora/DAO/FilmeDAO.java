@@ -287,17 +287,18 @@ public class FilmeDAO {
     }
     
     
-    public List<Filme> listarFilmesPorCliente(Cliente cliente) throws Exception{
+    public List<Filme> listarFilmesPorCliente(String cpf) throws Exception{
         
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
-            sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
-            sql.append(" where a.cliente_id = ? ");
+            sql.append(" INNER JOIN aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
+            sql.append(" INNER JOIN cliente c on c.id = a.cliente_id ");
+            sql.append(" where c.cpf = ? ");
             sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
         
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setLong(1, cliente.getId()); 
+        preparedStatement.setString(1, cpf); 
         ResultSet resultSet = preparedStatement.executeQuery();
         List<Filme> filmes = new ArrayList<Filme>();
         while(resultSet.next()){
@@ -321,7 +322,7 @@ public class FilmeDAO {
         
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT count(*) ocorrencias, f.id id, f.titulo titulo, f.genero_enum genero, f.classificacao classif, f.preco preco FROM filme f ");
-            sql.append(" INNER JOIN f.aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
+            sql.append(" INNER JOIN aluguel_filme af ON af.filme_id = f.id INNER JOIN aluguel a ON a.id = af.aluguel_id ");
             sql.append(" GROUP BY f.id, f.titulo, f.genero_enum, f.classificacao, f.preco ");
             sql.append(" ORDER BY count(*) DESC ");
         

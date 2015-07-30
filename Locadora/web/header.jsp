@@ -34,6 +34,15 @@
                                 <li><a href="/Locadora/filmeMvc?logica=ListaFilmes">Buscar</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relatório <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/Locadora/relatorioFilmesAlugados.jsp">Filmes Alugados</a></li>
+                                <li><a href="/Locadora/filmeMvc?logica=RankingFilmes">Ranking Filmes</a></li>
+                                <li><a href="/Locadora/relatorioAlugueis.jsp">Alugueis</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
