@@ -7,6 +7,7 @@ package br.com.locadora.logicas;
 
 import br.com.locadora.DAO.ClienteDAO;
 import br.com.locadora.DAO.UsuarioDAO;
+import br.com.locadora.exception.DuplicateRecordException;
 import br.com.locadora.model.Cliente;
 import br.com.locadora.model.Usuario;
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +28,18 @@ public class AdicionaClienteLogica implements Logica {
         String cpf = req.getParameter("cpf");
         int idade = Integer.parseInt(req.getParameter("idade"));
         Long id = null;
-        if(req.getParameter("id") != null){
+        if(req.getParameter("id") != null && !req.getParameter("id").trim().equals("")){
             id = Long.parseLong(req.getParameter("id"));
         }
-       Cliente cliente = new Cliente(id ,nome,cpf,idade);
+        Cliente cliente = new Cliente(id ,nome,cpf,idade);
 
         ClienteDAO dao = new ClienteDAO();
-        dao.inserir(cliente);
-
-        System.out.println("Adicionando cliente... ");
-
+        try{
+            dao.inserir(cliente);
+        }catch(DuplicateRecordException d){
+            req.setAttribute("clienteExistente", "true");
+            return "/adicionaCliente.jsp";
+        }
         return "clienteMvc?logica=ListaClientes";
     }
 

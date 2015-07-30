@@ -29,11 +29,20 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="well bs-component">
-                        <form class="form-horizontal" action="clienteMvc" method="post">
+                        <form id="formCliente" class="form-horizontal" action="clienteMvc" method="post">
                             <input type="hidden" name="logica" value="AdicionaCliente">
                             <input type="hidden" name="id" value="${param.id}">
                             <fieldset>
                                 <legend>Novo Cliente</legend>
+                                <%
+                                    if(request.getAttribute("clienteExistente") == "true"){
+                                %>    
+                                <div class="alert alert-danger" >
+                                    <strong>CPF já está cadastrado</strong>
+                                </div>
+                                <%
+                                    }    
+                                %>        
                                 <div class="form-group">
                                     <label for="inputNome" class="col-lg-2 control-label">Nome</label>
                                     <div class="col-lg-10">
@@ -57,7 +66,7 @@
 
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
+                                        <button type="reset" form="formCliente" class="btn btn-default" onclick="this.form.reset();">Cancelar</button>
                                         <button type="submit" class="btn btn-primary">Salvar</button>
                                     </div>
                                 </div>
