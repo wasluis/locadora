@@ -48,7 +48,7 @@ public class AluguelDAO {
         return id;
     }
     
-    public Aluguel alugar(Cliente cliente, Usuario usuario, Date dataAluguel, List<Filme> filmes) 
+    public double alugar(Cliente cliente, Usuario usuario, Date dataAluguel, List<Filme> filmes) 
             throws AluguelPendenteException, QuantidadeFilimesException, ClassificacaoIndicativaException, Exception{
         
         //Verificando quantidade de filmes
@@ -97,7 +97,11 @@ public class AluguelDAO {
         connection.close();
         
         Aluguel aluguelSalvo = new Aluguel(idAluguel, dataAluguel,filmes, cliente, valor, usuario);
-        return aluguelSalvo;
+        double preco=0;
+        for(Filme filme :filmes){
+            preco += filme.getPreco();
+        }
+        return preco;
     }
 
     public Aluguel buscarAluguelPendente(Cliente cliente) throws Exception{
@@ -113,9 +117,10 @@ public class AluguelDAO {
         
         Aluguel aluguel = null;
         while(resultSet.next()){
+            aluguel = new Aluguel();
             aluguel.setId(resultSet.getLong("idAluguel"));
             aluguel.setDataAluguel(resultSet.getDate("data_aluguel"));
-            aluguel.setDataDevolucao(resultSet.getDate("data_devolucao"));
+   
             aluguel.setValor(resultSet.getDouble("valor"));
             aluguel.setOperador(new Usuario());
             aluguel.getOperador().setId(resultSet.getLong("idOperador"));

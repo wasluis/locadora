@@ -52,7 +52,7 @@
 
             <div id="film">
                 <div class="form-group" >
-                    <label for="inputPassword" class="col-lg-2 control-label">Cod Filme</label>
+                    <label for="inputPassword" class="col-lg-2 control-label">Codigo Filme</label>
                     <div class="col-lg-10">
 
 
@@ -61,37 +61,30 @@
                         </div>
 
                     </div>
-                      <div class="col-lg-10 ">
-                    <div class="col-lg-9 col-lg-offset-9">
-                        <button type="button" class="btn-info"id="btn1">Adicionar Filme</button>
+                    <div class="col-lg-10 ">
+                        <div class="col-lg-9 col-lg-offset-9">
+                            <button type="button" class="btn-info"id="btn1">Adicionar Filme</button>
+                        </div>
                     </div>
-                           </div>
-                </div> </div>
-
-            <div class="form-group">
-                <label for="inputPreco" class="col-lg-2 control-label">Preço</label>
-                <div class="col-lg-10">
-                      <div class="col-lg-10">
-                    <input type="text" name="preco" class="form-control" id="inputPassword" placeholder="Preço">                    
-                </div>
-                     </div>
+                </div> 
             </div>
+
             <div class="form-group" >
                 <label for="disabledTextInput" class="col-sm-2 control-label" >Data Aluguel</label>
                 <div class="col-lg-10">
-                       <div class="col-lg-10">
-                    <input type="text"  class="data form-control " name="data">
-   </div>
+                    <div class="col-lg-10">
+                        <input type="text"  class="data form-control " name="data">
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-lg-10 ">
-                <div class="col-lg-12 col-lg-offset-9">
+                    <div class="col-lg-12 col-lg-offset-9">
 
-                    <button type="submit" class="btn btn-info">Efetivar Aluguel</button>
-                </div>
+                        <button type="submit" class="btn btn-info">Efetivar Aluguel</button>
                     </div>
+                </div>
             </div>
         </fieldset>
     </form>
