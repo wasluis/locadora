@@ -81,7 +81,17 @@
                     <div class="alert alert-danger" role="alert">${retorno}</div>
                     <%}%>
                 </div>
-            
+                <div class="row">
+                    <%
+                        if (request.getAttribute("aluguelRetorno") != null) {
+                    %>
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>#</strong>${aluguelRetorno}
+                    </div>
+                    <%}%>
+                </div>
+
 
             </div>
 
