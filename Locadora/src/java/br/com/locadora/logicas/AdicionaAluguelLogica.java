@@ -37,17 +37,17 @@ public class AdicionaAluguelLogica implements Logica {
         String idFilme1 = req.getParameter("filme1");
         String idFilme2 = req.getParameter("filme2");
         String idFilme3 = req.getParameter("filme3");
-        double preco = Double.parseDouble(req.getParameter("preco"));
+
 
         List<Filme> filmes = new ArrayList<Filme>();
 
         FilmeDAO filmeDao = new FilmeDAO();
         filmes.add(filmeDao.recuperar(new Long(idFilme1)));
         System.out.print(idFilme2);
-        if (idFilme2 != null   && !"".equals(idFilme2)) {
+        if (idFilme2 != null && !"".equals(idFilme2)) {
             filmes.add(filmeDao.recuperar(new Long(idFilme2)));
         }
-        if (idFilme3 != null   && !"".equals(idFilme3)) {
+        if (idFilme3 != null && !"".equals(idFilme3)) {
             filmes.add(filmeDao.recuperar(new Long(idFilme3)));
         }
         UsuarioDAO usuarioDao = new UsuarioDAO();
@@ -56,22 +56,22 @@ public class AdicionaAluguelLogica implements Logica {
 
         Cliente cliente = dao.buscarCliente(cpf);
         Usuario usuario = usuarioDao.buscarUsuarioPorLogin((String) req.getSession().getAttribute("login"));
-
+        double valor = 0;
         AluguelDAO aluguelDao = new AluguelDAO();
         try {
-            aluguelDao.alugar(cliente, usuario, data, filmes);
+            valor = aluguelDao.alugar(cliente, usuario, data, filmes);
         } catch (AluguelPendenteException e) {
             req.setAttribute("retorno", "Cliente com aluguel pendente");
             return "principal.jsp";
         } catch (QuantidadeFilimesException e) {
-             req.setAttribute("retorno", "Quantidade de filmes ultrapassou o limite de 3");
+            req.setAttribute("retorno", "Quantidade de filmes ultrapassou o limite de 3");
             return "principal.jsp";
         } catch (ClassificacaoIndicativaException e) {
-             req.setAttribute("retorno", "Classificação do filme acima da idade");
+            req.setAttribute("retorno", "Classificação do filme acima da idade");
             return "principal.jsp";
         }
-
-        return "aluguelMvc?logica=ListaAluguel";
+        req.setAttribute("aluguelRetorno", "Aluguel efetivado! Valor:" + valor);
+        return "principal.jsp";
     }
 
 }
