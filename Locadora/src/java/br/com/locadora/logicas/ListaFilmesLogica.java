@@ -9,6 +9,7 @@ import br.com.locadora.DAO.FilmeDAO;
 import br.com.locadora.DAO.UsuarioDAO;
 import br.com.locadora.model.Filme;
 import br.com.locadora.model.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +25,13 @@ public class ListaFilmesLogica implements Logica {
         throws Exception {
 
       // Monta a lista de contatos
-      List<Filme> filmes = new FilmeDAO().getLista();
-
+      List<Filme> filmes = new ArrayList<Filme>();
+      if(req.getParameter("titulo") != null && !req.getParameter("titulo").equals("") ){
+          filmes = new FilmeDAO().buscarFilme(req.getParameter("titulo"));
+      }
+      else{
+          filmes =  new FilmeDAO().getLista();   
+      }
       // Guarda a lista no request
       req.setAttribute("filmes", filmes);
   

@@ -44,13 +44,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Filme">
-                        </div>
-                        <button type="submit" class="btn btn-default">Buscar</button>
-                        
-                    </form>
+                   
                    
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">

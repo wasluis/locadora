@@ -164,7 +164,7 @@ public class FilmeDAO {
     public List<Filme> buscarFilme(String titulo) throws Exception {
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT id, titulo, genero_enum, classificacao, preco FROM filme where titulo like ? ");
+        sql.append(" SELECT id, titulo, genero_enum, classificacao, preco FROM filme where titulo ilike ? ");
 
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
