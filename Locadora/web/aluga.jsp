@@ -62,7 +62,7 @@
 
                     </div>
                     <div class="col-lg-10 ">
-                        <div class="col-lg-9 col-lg-offset-9">
+                        <div class="col-lg-9 col-lg-offset-7">
                             <button type="button" class="btn-info"id="btn1">Adicionar Filme</button>
                         </div>
                     </div>
