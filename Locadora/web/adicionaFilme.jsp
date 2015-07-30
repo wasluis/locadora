@@ -53,24 +53,24 @@
                                 <div class="form-group">
                                     <label for="inputAtores" class="col-lg-2 control-label">Atores</label>
                                     <div class="col-lg-10">
-                                        <textarea name="atores" id="inputAtores" class="form-control" rows="3"></textarea>
+                                        <textarea  name="atores" id="inputAtores" class="form-control" rows="3">${param.atores}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="generoSelect" class="col-lg-2 control-label">Gênero</label>
                                     <div class="col-lg-10">
-                                        <select name="genero"  class="form-control" id="generoSelect">
-                                            <option>1 - ACAO</option>
-                                            <option>2 - ADULTO</option>
-                                            <option>3 - ANIMACAO</option>
-                                            <option>4 - AVENTURA</option>
-                                            <option>5 - COMEDIA</option>
-                                            <option>6 - DANCA</option>
-                                            <option>7 - DOCUMENTARIO</option>
-                                            <option>8 - DRAMA</option>
-                                            <option>9 - ROMANCE</option>
-                                            <option>10 - SUSPENSE</option>
-                                            <option>11 - TERROR</option>
+                                        <select  name="genero"  class="form-control" id="generoSelect">
+                                            <option ${param.genero == 'ACAO' ? 'selected' : '' }          >1 - ACAO</option>
+                                            <option ${param.genero == 'ADULTO' ? 'selected' : '' }        >2 - ADULTO</option>
+                                            <option ${param.genero == 'ANIMACAO' ? 'selected' : '' }      >3 - ANIMACAO</option>
+                                            <option ${param.genero == 'AVENTURA' ? 'selected' : '' }      >4 - AVENTURA</option>
+                                            <option ${param.genero == 'COMEDIA' ? 'selected' : '' }       >5 - COMEDIA</option>
+                                            <option ${param.genero == 'DANCA' ? 'selected' : '' }         >6 - DANCA</option>
+                                            <option ${param.genero == 'DOCUMENTARIO' ? 'selected' : '' }  >7 - DOCUMENTARIO</option>
+                                            <option ${param.genero == 'DRAMA' ? 'selected' : '' }         >8 - DRAMA</option>
+                                            <option ${param.genero == 'ROMANCE' ? 'selected' : '' }       >9 - ROMANCE</option>
+                                            <option ${param.genero == 'SUSPENSE' ? 'selected' : '' }      >10 - SUSPENSE</option>
+                                            <option ${param.genero == 'TERROR' ? 'selected' : '' }        >11 - TERROR</option>
                                         </select>
                                     </div>
                                 </div>
@@ -81,11 +81,11 @@
                                     <label for="classificacao" class="col-lg-3 control-label">Classificacão</label>
                                     <div class="col-lg-9 right">
                                         <select  name="classificacao"  class="form-control" id="classificacao">
-                                            <option>0 anos</option>
-                                            <option>12 anos</option>
-                                            <option>14 anos</option>
-                                            <option>16 anos</option>
-                                            <option selected="selected">18 anos</option>
+                                            <option ${param.classificao == '0' ? 'selected' : '' }>0 anos</option>
+                                            <option ${param.classificao == '12' ? 'selected' : '' }>12 anos</option>
+                                            <option ${param.classificao == '14' ? 'selected' : '' }>14 anos</option>
+                                            <option ${param.classificao == '16' ? 'selected' : '' }>16 anos</option>
+                                            <option ${param.classificao == '18' ? 'selected' : '' }>18 anos</option>
                                         </select>
                                     </div>
                                 </div>

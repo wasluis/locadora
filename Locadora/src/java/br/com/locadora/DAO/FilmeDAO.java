@@ -15,9 +15,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -27,6 +30,21 @@ public class FilmeDAO {
 
     AtorDAO atorDAO = new AtorDAO();
 
+      public Long obterNovoId(Connection connection) throws Exception{
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT NEXTVAL('sq_filme_id') as id ");
+        
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql.toString());
+        resultSet.next();
+        Long id = resultSet.getLong("id");
+        
+        resultSet.close();
+        statement.close();
+        
+        return id;
+    }
+      
     public void update(Filme filme) throws Exception {
         Connection connection = ConexaoUtil.getConnection();
         StringBuilder sql = new StringBuilder();
@@ -38,9 +56,22 @@ public class FilmeDAO {
         preparedStatement.setInt(3, filme.getClassificacao());
         preparedStatement.setDouble(4, filme.getPreco());
         preparedStatement.setLong(5, filme.getId());
-
         preparedStatement.execute();
         preparedStatement.close();
+        Set<Ator> atoresFilme = atorDAO.buscarAtoresPorFilme(filme.getId());
+        Set<Ator> atoresNovos = new HashSet<Ator>(filme.getAtores());
+        if(atoresFilme != null){
+            atoresNovos.removeAll(atoresFilme);
+            atoresFilme.removeAll(filme.getAtores());
+            for(Ator ator : atoresFilme){
+                atorDAO.excluirAtorFilme(ator.getId(), filme.getId());
+            }        
+        }
+        for(Ator ator : atoresNovos){
+                ator = atorDAO.inserir(ator);
+                this.salvarRelacaoFilmeAtor(filme, ator, connection);
+         }  
+
         connection.close();
 
     }
@@ -52,13 +83,15 @@ public class FilmeDAO {
             Connection connection = ConexaoUtil.getConnection();
             StringBuilder sql = new StringBuilder();
             sql.append(" INSERT INTO filme(id, titulo, genero_enum, classificacao, preco) ");
-            sql.append(" VALUES ( NEXTVAL('sq_filme_id'), ?, ?, ?, ?) ");
+            sql.append(" VALUES ( ?, ?, ?, ?, ?) ");
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-            preparedStatement.setString(1, filme.getTitulo());
-            preparedStatement.setInt(2, filme.getGenero().ordinal());
-            preparedStatement.setInt(3, filme.getClassificacao());
-            preparedStatement.setDouble(4, filme.getPreco());
+            filme.setId(this.obterNovoId(connection));
+            preparedStatement.setLong(1, filme.getId());
+            preparedStatement.setString(2, filme.getTitulo());
+            preparedStatement.setInt(3, filme.getGenero().ordinal());
+            preparedStatement.setInt(4, filme.getClassificacao());
+            preparedStatement.setDouble(5, filme.getPreco());
             preparedStatement.execute();
 
             for (Ator ator : filme.getAtores()) {
@@ -111,20 +144,21 @@ public class FilmeDAO {
     public boolean excluir(Long id) throws Exception {
 
         StringBuilder sql = new StringBuilder();
-        sql.append(" DELETE FROM  filme WHERE id = ? ");
-
         Connection connection = ConexaoUtil.getConnection();
+        sql.append(" DELETE FROM  filme_ator WHERE filme_id = ? ");
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
         preparedStatement.setLong(1, id);
-        try {
-            preparedStatement.execute();
-            return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-            preparedStatement.close();
-            connection.close();
-        }
+        preparedStatement.execute();
+        
+        sql = new StringBuilder();
+        sql.append(" DELETE FROM  filme WHERE id = ? ");
+        preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, id);
+        preparedStatement.execute();
+    
+        preparedStatement.close();
+        connection.close();
+        return true;
     }
 
     public List<Filme> buscarFilme(String titulo) throws Exception {
@@ -202,8 +236,9 @@ public class FilmeDAO {
                 int classificacao = resultSet.getInt("classificacao");
                 Long id = resultSet.getLong("id");
                 Double preco = resultSet.getDouble("preco");
-
-                filmes.add(new Filme(id, titulo, GeneroEnum.fromOrdinal(genero), classificacao, preco));
+                Filme filme = new Filme(id, titulo, GeneroEnum.fromOrdinal(genero), classificacao, preco);
+                filme.setAtores(atorDAO.buscarAtoresPorFilme(filme.getId()));
+                filmes.add(filme);
 
             }
         } catch (Exception e) {

@@ -51,7 +51,7 @@ public class AtorDAO {
         
     public Long obterNovoId(Connection connection) throws Exception{
         StringBuilder sql = new StringBuilder();
-        sql.append(" SELECT NEXTVAL('sq_filme_id') as id ");
+        sql.append(" SELECT NEXTVAL('sq_ator_id') as id ");
         
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql.toString());
@@ -124,6 +124,45 @@ public class AtorDAO {
         preparedStatement.close();
         connection.close();
         return atores;
+    }
+    
+     public boolean excluir(Long id) throws Exception {
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" DELETE FROM  ator WHERE id = ? ");
+
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, id);
+        try {
+            preparedStatement.execute();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            preparedStatement.close();
+            connection.close();
+        }
+    }
+     
+      public boolean excluirAtorFilme(Long idAtor, Long idFilme) throws Exception {
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" DELETE FROM  filme_ator WHERE ator_id = ? AND filme_id = ? ");
+
+        Connection connection = ConexaoUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
+        preparedStatement.setLong(1, idAtor);
+        preparedStatement.setLong(2, idFilme);
+        try {
+            preparedStatement.execute();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            preparedStatement.close();
+            connection.close();
+        }
     }
     
 

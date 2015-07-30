@@ -48,6 +48,16 @@ public class Filme implements Serializable{
         this.preco = preco;
     }
     
+    public String atoresFormatado(){
+        String atores = new String();
+        if(!this.atores.isEmpty()){
+            for(Ator ator : this.atores){
+                atores += ", " + ator.getNome();
+            }
+        }
+        atores =  atores.replaceFirst(",", "");
+        return atores.replaceFirst(" ", "");
+    }
     
     
     public String getTitulo() {
