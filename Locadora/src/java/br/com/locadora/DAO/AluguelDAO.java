@@ -151,7 +151,8 @@ public class AluguelDAO {
         
         Connection connection = ConexaoUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-        preparedStatement.setLong(1, cliente.getId());
+        preparedStatement.setLong(2, cliente.getId());
+        preparedStatement.setTimestamp(1, new Timestamp(dataDevolucao.getTime()));
         preparedStatement.execute();
         preparedStatement.close();
         connection.close();
