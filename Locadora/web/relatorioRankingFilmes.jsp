@@ -35,8 +35,7 @@
                             <th>Atores</th>
                             <th>Classificação</th>
                             <th>Preço</th>
-                            <th></th>
-                            <th></th>
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -65,12 +64,6 @@
                                     ${filme.preco}
                                 </td>
 
-                                <td>
-                                    <a href="/Locadora/filmeMvc?logica=RemoverFilme&id=${filme.id}">Remover</a>
-                                </td>
-                                <td>
-                                    <a href="/Locadora/adicionaFilme.jsp?id=${filme.id}&titulo=${filme.titulo}&classificao=${filme.classificacao}&preco=${filme.preco}&genero=${filme.genero}&atores=${filme.atoresFormatado()}">Editar</a>
-                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>

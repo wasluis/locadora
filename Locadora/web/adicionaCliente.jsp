@@ -36,28 +36,28 @@
                             <fieldset>
                                 <legend>Novo Cliente</legend>
                                 <%
-                                    if(request.getAttribute("clienteExistente") == "true"){
+                                    if(request.getAttribute("erro") == "true"){
                                 %>    
                                 <div class="alert alert-danger" >
-                                    <strong>CPF já está cadastrado</strong>
+                                    <strong><%=request.getAttribute("mensagemErro")%></strong>
                                 </div>
                                 <%
                                     }    
                                 %>        
                                 <div class="form-group">
-                                    <label for="inputNome" class="col-lg-2 control-label">Nome</label>
+                                    <label for="inputNome" class="col-lg-2 control-label">Nome*</label>
                                     <div class="col-lg-10">
                                         <input type="text" value="${param.nome}" name="nome" class="form-control" id="inputNome" placeholder="Nome">                    
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputCPF" class="col-lg-2 control-label">Cpf</label>
+                                    <label for="inputCPF" class="col-lg-2 control-label">Cpf*</label>
                                     <div class="col-lg-10">
                                         <input type="text" value="${param.cpf}" name="cpf" class="form-control" id="inputCPF" placeholder="CPF">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputIdade" class="col-lg-2 control-label">Idade</label>
+                                    <label for="inputIdade" class="col-lg-2 control-label">Idade*</label>
                                     <div class="col-lg-10">
                                         <input type="text"  value="${param.idade}" name="idade" class="form-control" id="inputIdade" placeholder="Idade">                    
                                     </div>

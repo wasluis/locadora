@@ -26,7 +26,17 @@ public class AdicionaClienteLogica implements Logica {
 
         String nome = req.getParameter("nome");
         String cpf = req.getParameter("cpf");
-        int idade = Integer.parseInt(req.getParameter("idade"));
+        Integer idade = null;
+        if(!req.getParameter("idade").trim().equals("")){
+            idade = Integer.parseInt(req.getParameter("idade"));
+        }
+        
+        
+        if(nome == null || cpf == null || idade == null){
+             req.setAttribute("erro", "true");
+            req.setAttribute("mensagemErro", "Preencher campos obrigatórios");
+            return "/adicionaCliente.jsp";
+        }
         Long id = null;
         if(req.getParameter("id") != null && !req.getParameter("id").trim().equals("")){
             id = Long.parseLong(req.getParameter("id"));
@@ -37,7 +47,8 @@ public class AdicionaClienteLogica implements Logica {
         try{
             dao.inserir(cliente);
         }catch(DuplicateRecordException d){
-            req.setAttribute("clienteExistente", "true");
+            req.setAttribute("erro", "true");
+            req.setAttribute("mensagemErro", "CPF já cadastrado");
             return "/adicionaCliente.jsp";
         }
         return "clienteMvc?logica=ListaClientes";

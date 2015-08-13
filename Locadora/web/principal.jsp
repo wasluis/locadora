@@ -92,7 +92,16 @@
                     <%}%>
                 </div>
 
-
+                  <div class="row">
+                    <%
+                        if (request.getAttribute("devolverRetorno") != null) {
+                    %>
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>#</strong>${devolverRetorno}
+                    </div>
+                    <%}%>
+                </div>   
             </div>
                 
             <%
@@ -120,8 +129,7 @@
                                     <th>Atores</th>
                                     <th>Classificação</th>
                                     <th>Preço</th>
-                                    <th></th>
-                                    <th></th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
