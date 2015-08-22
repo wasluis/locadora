@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:head>
+		<title>Cadastrar Contato</title>
+	</h:head>
+	
+	<h:body>
+		<h:form>
+			<h:messages id="message" style="color: red;"/>
+			<h:outputLabel for="inputNome" value="Nome: " />
+			<h:inputText id="inputNome" value="#{agendaBean.contato.nome}" required="true" requiredMessage="Nome é obrigatório"/>
+			
+			<br/>
+			<h:outputLabel for="inputSexo" value="Sexo: " />
+			<h:selectOneRadio value="#{agendaBean.contato.sexo}" id="inputSexo" required="true" requiredMessage="Sexo é obrigatório">
+				<f:selectItem itemLabel="Masculino" itemValue="M"/>				
+				<f:selectItem itemLabel="Feminino" itemValue="F"/>
+			</h:selectOneRadio>
+			<br/>			
+			<h:outputLabel for="inputTelefone" value="Telefone: " />
+			<h:inputText id="inputTelefone" value="#{agendaBean.contato.telefone}" required="true" requiredMessage="Telefone é obrigatório"/>
+			
+			<br/>			
+			<h:outputLabel for="inputTipo" value="Tipo: " />
+			
+			<h:selectOneMenu id="inputTipo" value="#{agendaBean.contato.tipoTelefone}" >
+				<f:selectItem itemLabel="Celular" itemValue="Celular"/>				
+				<f:selectItem itemLabel="Residencial" itemValue="Residencial"/>
+			</h:selectOneMenu>
+			<br/>	
+			<h:commandButton value="Salvar" action="#{agendaBean.salvar}" />		
+			
+		</h:form>	
+	</h:body>
+</html>
