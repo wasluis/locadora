@@ -42,7 +42,7 @@ public class CounterView implements Serializable {
 		stoped = true;
 		RequestContext reqCtx = RequestContext.getCurrentInstance();
 		reqCtx.execute("poll.stop();");
-		chamada = new Chamada(getNumber(), 1);
+		chamada = new Chamada(getNumber(), 1, new Date());
 		salvar();
 		reqCtx.closeDialog("chamada.xhtml");
 	}

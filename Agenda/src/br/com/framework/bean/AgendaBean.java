@@ -1,6 +1,7 @@
 package br.com.framework.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,8 +13,12 @@ import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.primefaces.context.RequestContext;
+
+import br.com.framework.dao.ChamadaDAOImpl;
 import br.com.framework.dao.ContatoDAOImpl;
 import br.com.framework.dao.MensagemDAOImpl;
+import br.com.framework.model.Chamada;
 import br.com.framework.model.Contato;
 import br.com.framework.model.Mensagem;
 import br.com.framework.vo.ContatoVO;
@@ -40,6 +45,9 @@ public class AgendaBean implements Serializable{
 	private static final String LIST = "listContato.xhtml";
 	
 	private Contato contatoMensagem;
+	private Date number = new Date(0);
+	private boolean stoped = false;
+	private Chamada chamada= null ;
 	
 	public String prepareList(){
 		contatoVO = new ContatoVO();
@@ -166,7 +174,15 @@ public class AgendaBean implements Serializable{
 		}
 		return mensagemDAO;
 	}
-
+	public ChamadaDAOImpl getChamadaDAO(){
+		ChamadaDAOImpl chamadaDAO = null;
+		try {
+			chamadaDAO = (ChamadaDAOImpl)new InitialContext().lookup("java:module/ChamadaDAOImpl");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return chamadaDAO;
+	}
 	public ContatoVO getContatoVO() {
 		return contatoVO;
 	}
@@ -199,7 +215,34 @@ public class AgendaBean implements Serializable{
 		this.contatoMensagem = contatoMensagem;
 	}
 
-	
-	
+	public String getNumber() {
+		SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+		return sdf.format(number);
+	}
+
+	public void increment() {
+		if (!stoped ) {
+			number = new Date(number.getTime() + 1000);
+		}
+	}
+
+	public String stop() {
+		
+		stoped = true;
+		RequestContext reqCtx = RequestContext.getCurrentInstance();
+		reqCtx.execute("poll.stop();");
+		chamada = new Chamada(getNumber(), contatoMensagem.getId().intValue(),new Date());
+		salvarChamada();
+		number = new Date(0);
+		return null;
+
+	}
+
+	private void salvarChamada() {
+		getChamadaDAO().insert(chamada);
+		
+		
+	}
+
 	
 }
