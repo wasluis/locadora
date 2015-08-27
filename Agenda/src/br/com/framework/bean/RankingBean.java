@@ -86,7 +86,7 @@ public class RankingBean {
         Axis yAxis = grafMensagens.getAxis(AxisType.Y);
         yAxis.setLabel("Mensagens");
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(50);
 	}
 	
 

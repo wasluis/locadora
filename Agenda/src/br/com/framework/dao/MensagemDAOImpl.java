@@ -36,7 +36,7 @@ public class MensagemDAOImpl extends BaseDAOImpl<Mensagem>  {
 			query.setParameter("nome", "%" +  mensagemVO.getContato().getNome() + "%");
 		}
 		if(mensagemVO.getConteudo() != null && !mensagemVO.getConteudo().trim().equals("")){
-			query.setParameter("conteudo", mensagemVO.getConteudo().trim());
+			query.setParameter("conteudo", "%" + mensagemVO.getConteudo().trim() + "%" );
 		}
 		
 		
