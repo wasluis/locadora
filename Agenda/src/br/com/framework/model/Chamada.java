@@ -27,6 +27,10 @@ public class Chamada {
 		this.duracao = duracao;
 		this.contatoId = contatoId;
 	}
+	
+	public Chamada(){
+		super();
+	}
 
 	public Long getId() {
 		return id;

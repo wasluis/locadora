@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Agenda</title>
+		<link type="text/css" href="/Agenda/css/padrao.css" rel="stylesheet"/>
+		
+	</h:head>
+	
+	<h:body>
+		<h:form id="list">
+		
+			<div >
+					<p:outputLabel for="inputDataInicial" value="Data de envio inicial"/>
+		            <p:calendar id="inputDataInicial" locale="pt_BR" value="#{mensagemBean.mensagemVO.dataEnvioInicial}" 
+		                pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" mask="true"/>
+		            <p:watermark value="DD/MM/AAAA" for="inputDataNascimento" />
+
+					<p:outputLabel for="inputDataFinal" value="Data de envio inicial"/>
+		            <p:calendar id="inputDataFinal" locale="pt_BR" value="#{mensagemBean.mensagemVO.dataEnvioInicial}" 
+		                pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" mask="true"/>
+		            <p:watermark value="DD/MM/AAAA" for="inputDataNascimento" />
+
+			
+					<p:outputLabel value="Conteúdo"/>
+					<p:inputText value="#{mensagemBean.mensagemVO.conteudo}"/>
+				
+					<p:outputLabel value="Nome do mensagem"/>
+					<p:inputText value="#{mensagemBean.mensagem.nome}"/>
+				
+			</div>
+			
+			<div style="margin-top: 20px;">
+				<p:commandButton value="Buscar" action="#{mensagemBean.pesquisar}" update="dataTable" />
+			</div>
+			
+			<div style="margin-top: 20px;">
+				<p:dataTable
+					id="dataTable"
+					value="#{mensagemBean.mensagens}"
+					var="mensagem"
+					>
+					<p:column headerText="Data de envio">
+						<h:outputText value="#{mensagem.dataEnvio}" />
+					</p:column>
+					
+					<p:column headerText="Conteúdo">
+						<h:outputText value="#{mensagem.conteudo}" />
+					</p:column>
+					
+					<p:column headerText="Contato">
+						<h:outputText value="#{mensagem.contato.nome}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</h:body>
+</html>
