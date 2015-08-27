@@ -9,4 +9,8 @@ public interface ContatoDAO extends BaseDAO<Contato>{
 	
 	List<Contato> buscarContatos(ContatoVO contatoVO) throws Exception;
 
+	List<Contato> buscarContatosChamadas();
+
+	List<Contato> buscarContatosMensagem();
+
 }

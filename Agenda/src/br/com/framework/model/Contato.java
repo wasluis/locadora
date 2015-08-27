@@ -2,12 +2,16 @@ package br.com.framework.model;
 
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,6 +43,12 @@ public class Contato {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataNascimento;
 
+	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE)
+	private List<Mensagem> mensagens;
+	
+	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE)
+	private List<Chamada> chamadas;
+	
 	public Contato(Long id, String nome, String telefone, Character sexo,
 			String tipoTelefone) {
 		super();
@@ -99,6 +109,22 @@ public class Contato {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+
+	public List<Mensagem> getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(List<Mensagem> mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public List<Chamada> getChamadas() {
+		return chamadas;
+	}
+
+	public void setChamadas(List<Chamada> chamadas) {
+		this.chamadas = chamadas;
 	}
 	
 	

@@ -10,7 +10,7 @@ import br.com.framework.model.Contato;
 import br.com.framework.vo.ContatoVO;
 
 @Stateless
-public class ContatoDAOImpl extends BaseDAOImpl<Contato> {
+public class ContatoDAOImpl extends BaseDAOImpl<Contato> implements ContatoDAO{
 	
 	
 	@SuppressWarnings("unchecked")
@@ -62,5 +62,26 @@ public class ContatoDAOImpl extends BaseDAOImpl<Contato> {
 
 		return query.getResultList();
 	}
+
 	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contato> buscarContatosMensagem(){
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT c FROM Contato c INNER JOIN FETCH c.mensagens m INNER JOIN FETCH c.chamadas ch ");
+		Query query = getEntityManager().createQuery(sql.toString());
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Contato> buscarContatosChamadas(){
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT c FROM Contato c INNER JOIN FETCH c.chamadas ch ");
+		Query query = getEntityManager().createQuery(sql.toString());
+		return query.getResultList();
+	}
 }
