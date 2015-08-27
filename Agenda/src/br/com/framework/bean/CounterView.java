@@ -18,6 +18,10 @@ import br.com.framework.model.Chamada;
 @ViewScoped
 public class CounterView implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3103893533743487434L;
 	private Date number = new Date(0);
 	private boolean stoped = false;
 	private Chamada chamada= null ;
@@ -38,6 +42,9 @@ public class CounterView implements Serializable {
 		stoped = true;
 		RequestContext reqCtx = RequestContext.getCurrentInstance();
 		reqCtx.execute("poll.stop();");
+		chamada = new Chamada(getNumber(), 1);
+		salvar();
+		reqCtx.closeDialog("chamada.xhtml");
 	}
 	
 	public ChamadaDAOImpl getChamadaDAO(){
@@ -61,7 +68,8 @@ public class CounterView implements Serializable {
 	
 	public void efetuarChamada(){
 		System.out.println("teste");
-		RequestContext.getCurrentInstance().openDialog("index");
+
+		RequestContext.getCurrentInstance().openDialog("chamada.xhtml");
 	}
 
 }

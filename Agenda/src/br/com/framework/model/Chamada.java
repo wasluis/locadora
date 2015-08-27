@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,17 +14,17 @@ import javax.persistence.Table;
 public class Chamada {
 	@Id
 	@GeneratedValue(generator = "SEQ_CHAMADA", strategy = GenerationType.SEQUENCE)
-	private Long id;
+	private int id;
 	
 	@Column
 	private String duracao;
 	
 	@Column
-	private Long contatoId;
+	private int contatoId;
 	
 	private Contato contato;
 
-	public Chamada(String duracao, Long contatoId) {
+	public Chamada(String duracao, int contatoId) {
 		super();
 		this.duracao = duracao;
 		this.contatoId = contatoId;
@@ -36,11 +34,11 @@ public class Chamada {
 		super();
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -52,11 +50,11 @@ public class Chamada {
 		this.duracao = duracao;
 	}
 
-	public Long getContatoId() {
+	public int getContatoId() {
 		return contatoId;
 	}
 
-	public void setContatoId(Long contatoId) {
+	public void setContatoId(int contatoId) {
 		this.contatoId = contatoId;
 	}
 

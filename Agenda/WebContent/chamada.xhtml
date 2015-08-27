@@ -10,21 +10,25 @@
 </h:head>
 
 <h:body>
-	<h:form id="list">
+
+	<h:form>
 		<div class="fieldRow">
 			<div class="fieldColumn" style="width: 20%">
-				<h:outputText id="nome" value="Diego" />
+				<h:outputText id="nome" value="#{agendaBean.contato.nome}" />
 			</div>
 			<div class="fieldColumn" style="width: 20%">
 				<h:outputText id="txt_count" value="#{counterView.number}" />
 				<p:poll interval="1" listener="#{counterView.increment}"
 					update="txt_count" />
 			</div>
-			<div class="fieldColumn" style="width: 20%">
-				<h:commandButton value="Finalizar Chamada"
-					action="#{counterView.stop}" />
-			</div>
+			<p:column headerText="chamada">
+				<p:commandButton value="Finalizar Chamada" icon="ui-icon-extlink"
+					actionListener="#{counterView.stop}" />
+
+			</p:column>
+
 		</div>
 	</h:form>
+
 </h:body>
 </html>
