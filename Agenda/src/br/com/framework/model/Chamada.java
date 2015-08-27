@@ -36,11 +36,6 @@ public class Chamada {
 		super();
 	}
 
-	public Chamada() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	public Long getId() {
 		return id;
 	}
