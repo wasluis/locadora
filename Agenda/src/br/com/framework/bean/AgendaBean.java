@@ -1,24 +1,30 @@
 package br.com.framework.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-import br.com.framework.dao.ContatoDAO;
+import br.com.framework.dao.ContatoDAOImpl;
 import br.com.framework.model.Contato;
 
 
-@ManagedBean
+@ManagedBean(name="agendaBean")
 @SessionScoped
-public class AgendaBean {
+public class AgendaBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3250033079195721281L;
 
 	private Contato contato = new Contato();
 	
 	private List<Contato> contatos;
 	
-	private ContatoDAO contatoDAO = new ContatoDAO();
-
 	public String prepareInsert(){
 		contato = new Contato();
 		return "formContato.xhtml";
@@ -26,7 +32,7 @@ public class AgendaBean {
 	
 	public String salvar(){
 		try{
-			contatoDAO.inserir(contato);
+			getContatoDAO().insert(contato);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -35,7 +41,7 @@ public class AgendaBean {
 	
 	public String pesquisar(){
 		try{
-			contatos = contatoDAO.getLista();
+//			contatos = getContatoDAO().getLista();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -58,6 +64,17 @@ public class AgendaBean {
 		this.contatos = contatos;
 	}
 	
+	public ContatoDAOImpl getContatoDAO(){
+		ContatoDAOImpl contatoDAO = null;
+		try {
+			contatoDAO = (ContatoDAOImpl)new InitialContext().lookup("java:module/ContatoDAOImpl");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return contatoDAO;
+	}
+
+
 	
-		
 }
