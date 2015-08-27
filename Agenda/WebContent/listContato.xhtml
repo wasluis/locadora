@@ -55,6 +55,9 @@
 					<p:column headerText="Sexo">
 						<h:outputText value="#{contato.sexo}" />
 					</p:column>
+					<p:column headerText="chamada">
+						<p:commandButton value="Efetuar Chamada" icon="ui-icon-extlink" actionListener="#{counterView.efetuarChamada}" />
+					</p:column>
 				</p:dataTable>
 			</div>
 		</h:form>

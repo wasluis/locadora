@@ -13,7 +13,6 @@ import org.primefaces.context.RequestContext;
 
 import br.com.framework.dao.ChamadaDAOImpl;
 import br.com.framework.model.Chamada;
-import br.com.framework.model.Contato;
 
 @ManagedBean
 @ViewScoped
@@ -58,6 +57,11 @@ public class CounterView implements Serializable {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	public void efetuarChamada(){
+		System.out.println("teste");
+		RequestContext.getCurrentInstance().openDialog("index");
 	}
 
 }

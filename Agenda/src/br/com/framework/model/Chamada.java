@@ -28,6 +28,11 @@ public class Chamada {
 		this.contatoId = contatoId;
 	}
 
+	public Chamada() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -7,6 +7,7 @@
 	<persistence-unit name="agenda" transaction-type="JTA">
 		<jta-data-source>jdbc/Agenda</jta-data-source>		
 		<class>br.com.framework.model.Contato</class>
+		<class>br.com.framework.model.Chamada</class>
 		
 		<properties> 
            <property name="hibernate.show_sql"   value="true"/>
