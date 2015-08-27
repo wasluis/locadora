@@ -10,6 +10,7 @@ import javax.naming.NamingException;
 
 import br.com.framework.dao.ContatoDAOImpl;
 import br.com.framework.model.Contato;
+import br.com.framework.vo.ContatoVO;
 
 
 @ManagedBean(name="agendaBean")
@@ -24,6 +25,7 @@ public class AgendaBean implements Serializable{
 	private Contato contato = new Contato();
 	
 	private List<Contato> contatos;
+	private ContatoVO contatoVO;
 	
 	public String prepareInsert(){
 		contato = new Contato();
@@ -41,7 +43,7 @@ public class AgendaBean implements Serializable{
 	
 	public String pesquisar(){
 		try{
-//			contatos = getContatoDAO().getLista();
+			contatos = getContatoDAO().findAll();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -75,6 +77,15 @@ public class AgendaBean implements Serializable{
 		return contatoDAO;
 	}
 
+	public ContatoVO getContatoVO() {
+		return contatoVO;
+	}
 
+	public void setContatoVO(ContatoVO contatoVO) {
+		this.contatoVO = contatoVO;
+	}
+
+
+	
 	
 }

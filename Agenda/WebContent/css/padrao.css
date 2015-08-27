@@ -1,0 +1,42 @@
+@CHARSET "ISO-8859-1";
+
+.infoRow, .fieldRow{
+    width: 100%;
+    height: 45px;
+    clear: left;
+}
+
+.fieldRow .field:last-child {
+    padding-right: 15px !important;
+}
+
+
+.fieldColumn {
+    box-sizing: border-box;
+    float: left;
+    min-width: 120px;
+    padding: 5px 0 0 15px;
+    position: relative;
+    width: 100%;
+}
+.fieldColumn input {
+    width: 100% !important;
+}
+.fieldColumn:first-child {
+    padding-left: 0;
+}
+.fieldColumn > label {
+    color: #666;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 11px !important;
+    text-transform: uppercase;
+}
+.fieldColumn.noLabel {
+    padding-top: 20px;
+}
+.fieldColumn.noLabel > .ui-button {
+    margin-left: 15px;
+}
+.fieldColumn.noLabel > .ui-button:first-child {
+    margin-left: 0;
+}
