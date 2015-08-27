@@ -36,7 +36,6 @@ public class Chamada {
 		super();
 	}
 
-
 	public Long getId() {
 		return id;
 	}
