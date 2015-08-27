@@ -77,6 +77,11 @@
 					<p:column headerText="Sexo" sortBy="#{contato.sexo}">
 						<h:outputText value="#{contato.sexo}" />
 					</p:column>
+
+					<p:column headerText="chamada">
+						<p:commandButton value="Efetuar Chamada" icon="ui-icon-extlink" actionListener="#{counterView.efetuarChamada}" />
+					</p:column>
+
 					
 					<f:facet name="footer">
 						<h:panelGroup>
@@ -84,6 +89,7 @@
 							<p:commandButton value="Editar" action="#{agendaBean.prepareEdit}"  style="background-color: #7096AB;"/>
 						</h:panelGroup>
 					</f:facet>
+t
 				</p:dataTable>
 			</div>
 		</h:form>

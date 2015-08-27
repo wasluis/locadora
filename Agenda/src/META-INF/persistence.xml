@@ -9,6 +9,7 @@
 		<class>br.com.framework.model.Contato</class>	
 		<class>br.com.framework.model.Chamada</class>
 		<class>br.com.framework.model.Mensagem</class>
+
 		<properties> 
            <property name="hibernate.show_sql"   value="true"/>
 	        <property name="hibernate.format_sql" value="true"/>
