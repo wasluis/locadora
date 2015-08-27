@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
 	<h:head>
 		<title>Cadastrar Contato</title>
@@ -10,29 +11,36 @@
 	
 	<h:body>
 		<h:form>
-			<h:messages id="message" style="color: red;"/>
-			<h:outputLabel for="inputNome" value="Nome: " />
-			<h:inputText id="inputNome" value="#{agendaBean.contato.nome}" required="true" requiredMessage="Nome é obrigatório"/>
+			<p:growl id="message" autoUpdate="true" widgetVar="messages"/>
+			<p:outputLabel for="inputNome" value="Nome: " />
+			<p:inputText id="inputNome" value="#{agendaBean.contato.nome}" required="true" requiredMessage="Nome é obrigatório"/>
 			
 			<br/>
-			<h:outputLabel for="inputSexo" value="Sexo: " />
-			<h:selectOneRadio value="#{agendaBean.contato.sexo}" id="inputSexo" required="true" requiredMessage="Sexo é obrigatório">
+			<p:outputLabel for="inputSexo" value="Sexo: " />
+			<p:selectOneRadio value="#{agendaBean.contato.sexo}" id="inputSexo" required="true" requiredMessage="Sexo é obrigatório">
 				<f:selectItem itemLabel="Masculino" itemValue="M"/>				
 				<f:selectItem itemLabel="Feminino" itemValue="F"/>
-			</h:selectOneRadio>
+			</p:selectOneRadio>
 			<br/>			
-			<h:outputLabel for="inputTelefone" value="Telefone: " />
-			<h:inputText id="inputTelefone" value="#{agendaBean.contato.telefone}" required="true" requiredMessage="Telefone é obrigatório"/>
+			<p:outputLabel for="inputTelefone" value="Telefone: " />
+			<p:inputText id="inputTelefone" value="#{agendaBean.contato.telefone}" required="true" requiredMessage="Telefone é obrigatório"/>
 			
 			<br/>			
-			<h:outputLabel for="inputTipo" value="Tipo: " />
+			<p:outputLabel for="inputTipo" value="Tipo: " />
 			
-			<h:selectOneMenu id="inputTipo" value="#{agendaBean.contato.tipoTelefone}" >
+			<p:selectOneMenu id="inputTipo" value="#{agendaBean.contato.tipoTelefone}" >
 				<f:selectItem itemLabel="Celular" itemValue="Celular"/>				
 				<f:selectItem itemLabel="Residencial" itemValue="Residencial"/>
-			</h:selectOneMenu>
+			</p:selectOneMenu>
+			<br/>			
+			<p:outputLabel for="inputDataNascimento" value="Data de Nascimento: " />
+			
+            <p:calendar id="inputDataNascimento" locale="pt_BR" value="#{agendaBean.contato.dataNascimento}" 
+                pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" mask="true"/>
+            <p:watermark value="DD/MM/AAAA" for="inputDataNascimento" />
+			
 			<br/>	
-			<h:commandButton value="Salvar" action="#{agendaBean.salvar}" />		
+			<p:commandButton value="Salvar" action="#{agendaBean.salvar}" />		
 			
 		</h:form>	
 	</h:body>

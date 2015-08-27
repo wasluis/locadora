@@ -1,5 +1,7 @@
 package br.com.framework.vo;
 
+import java.util.Date;
+
 public class ContatoVO {
 	
 	private String nome;
@@ -10,8 +12,10 @@ public class ContatoVO {
 	
 	private String tipoTelefone;
 
+	private Date dataNascimentoInicial;
 	
-
+	private Date dataNascimentoFinal;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -43,5 +47,22 @@ public class ContatoVO {
 	public void setTipoTelefone(String tipoTelefone) {
 		this.tipoTelefone = tipoTelefone;
 	}
+
+	public Date getDataNascimentoInicial() {
+		return dataNascimentoInicial;
+	}
+
+	public void setDataNascimentoInicial(Date dataNascimentoInicial) {
+		this.dataNascimentoInicial = dataNascimentoInicial;
+	}
+
+	public Date getDataNascimentoFinal() {
+		return dataNascimentoFinal;
+	}
+
+	public void setDataNascimentoFinal(Date dataNascimentoFinal) {
+		this.dataNascimentoFinal = dataNascimentoFinal;
+	}
+	
 	
 }

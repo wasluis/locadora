@@ -1,5 +1,8 @@
 package br.com.framework.model;
 
+
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -30,7 +35,9 @@ public class Contato {
 	@Column(name = "tipo_telefone")
 	private String tipoTelefone;
 
-	
+	@Column(name = "data_nascimento")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataNascimento;
 
 	public Contato(Long id, String nome, String telefone, Character sexo,
 			String tipoTelefone) {
@@ -84,6 +91,14 @@ public class Contato {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	
 	

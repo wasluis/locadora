@@ -25,7 +25,7 @@ public class AgendaBean implements Serializable{
 	private Contato contato = new Contato();
 	
 	private List<Contato> contatos;
-	private ContatoVO contatoVO;
+	private ContatoVO contatoVO = new ContatoVO();
 	
 	public String prepareInsert(){
 		contato = new Contato();
@@ -43,7 +43,7 @@ public class AgendaBean implements Serializable{
 	
 	public String pesquisar(){
 		try{
-			contatos = getContatoDAO().findAll();
+			contatos = getContatoDAO().buscarContatos(contatoVO);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

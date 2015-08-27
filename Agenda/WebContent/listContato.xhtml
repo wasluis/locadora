@@ -14,52 +14,49 @@
 	<h:body>
 		<h:form id="list">
 		
-			<div class="fieldRow">
-				<div class="fieldColumn" style="width: 20%">
+			<div >
 					<p:outputLabel value="Nome"/>
 					<p:inputText value="#{agendaBean.contatoVO.nome}"/>
-				</div>
 				
-				<div class="fieldColumn" style="width: 20%">
 					<p:outputLabel value="Telefone"/>
 					<p:inputText value="#{agendaBean.contatoVO.telefone}"/>
-				</div>
 				
-				<div class="fieldColumn" style="width: 20%">	
 					<p:outputLabel value="Tipo Telefone"/>
 					<p:inputText value="#{agendaBean.contatoVO.tipoTelefone}"/>
-				</div>
 				
-				<div class="fieldColumn" style="width: 20%">
 					<p:outputLabel value="Sexo"/>
 					<p:inputText value="#{agendaBean.contatoVO.sexo}"/>
-				</div>
 			</div>
 			
-			<br/>
-			<br/>
-			<p:dataTable
-				id="dataTable"
-				value="#{agendaBean.contatos}"
-				var="contato">
-				
-				<p:column headerText="Nome">
-					<h:outputText value="#{contato.nome}" />
-				</p:column>
-				
-				<p:column headerText="Telefone">
-					<h:outputText value="#{contato.telefone}" />
-				</p:column>
-				
-				
-				<p:column headerText="Tipo Telefone">
-					<h:outputText value="#{contato.tipoTelefone}" />
-				</p:column>
-				
-				<p:column headerText="Sexo">
-					<h:outputText value="#{contato.sexo}" />
-				</p:column>
-			</p:dataTable>
+			<div style="margin-top: 20px;">
+				<p:commandButton value="Buscar" action="#{agendaBean.pesquisar}" update="dataTable" />
+			</div>
+			
+			<div style="margin-top: 20px;">
+				<p:dataTable
+					id="dataTable"
+					value="#{agendaBean.contatos}"
+					var="contato"
+					>
+					
+					<p:column headerText="Nome">
+						<h:outputText value="#{contato.nome}" />
+					</p:column>
+					
+					<p:column headerText="Telefone">
+						<h:outputText value="#{contato.telefone}" />
+					</p:column>
+					
+					
+					<p:column headerText="Tipo Telefone">
+						<h:outputText value="#{contato.tipoTelefone}" />
+					</p:column>
+					
+					<p:column headerText="Sexo">
+						<h:outputText value="#{contato.sexo}" />
+					</p:column>
+				</p:dataTable>
+			</div>
 		</h:form>
 	</h:body>
 </html>
