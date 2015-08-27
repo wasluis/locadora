@@ -4,9 +4,7 @@ package br.com.framework.dao;
 import java.util.List;
 
 import javax.ejb.Stateless;
-
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import javax.persistence.Query;
 
 import br.com.framework.model.Contato;
 import br.com.framework.vo.ContatoVO;
@@ -18,31 +16,51 @@ public class ContatoDAOImpl extends BaseDAOImpl<Contato> {
 	@SuppressWarnings("unchecked")
 	public List<Contato> buscarContatos(ContatoVO contatoVO) throws Exception{
 		
-		Criteria criteria = getSession().createCriteria(Contato.class, "c");
-		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT c FROM Contato c WHERE 1 = 1 ");
 		if(contatoVO.getNome() != null && !contatoVO.getNome().trim().equals("")){
-			criteria.add(Restrictions.eq("c.nome", contatoVO.getNome()));
+			sql.append(" and c.nome like :nome ");
 		}
 		
 		if(contatoVO.getTelefone() != null && !contatoVO.getTelefone().trim().equals("")){
-			criteria.add(Restrictions.eq("c.telefone", contatoVO.getTelefone()));
+			sql.append(" and c.telefone = :telefone ");
 		}
 		
 		if(contatoVO.getTipoTelefone() != null && !contatoVO.getTipoTelefone().trim().equals("")){
-			criteria.add(Restrictions.eq("c.tipoTelefone", contatoVO.getTipoTelefone()));
+			sql.append(" and c.tipoTelefone = :tipoTelefone ");
 		}
 		
 		if(contatoVO.getSexo() != null && !contatoVO.getSexo().equals("")){
-			criteria.add(Restrictions.eq("c.sexo", contatoVO.getSexo()));
+			sql.append(" and c.sexo = :sexo ");
 		}
 		
 		if(contatoVO.getDataNascimentoInicial() != null && contatoVO.getDataNascimentoFinal() != null){
-			criteria.add(Restrictions.between("c.dataNascimento", contatoVO.getDataNascimentoInicial(), contatoVO.getDataNascimentoFinal()));
+			sql.append(" and c.dataNascimento BETWEEN :dataNascimentoInicial AND :dataNascimentoFinal ");
 		}
 		
-		return criteria.list();
+		Query query = getEntityManager().createQuery(sql.toString());
+		if(contatoVO.getNome() != null && !contatoVO.getNome().trim().equals("")){
+			query.setParameter("nome", "%" +  contatoVO.getNome() + "%");
+		}
+		if(contatoVO.getTelefone() != null && !contatoVO.getTelefone().trim().equals("")){
+			query.setParameter("telefone", contatoVO.getTelefone());
+		}
 		
+		if(contatoVO.getTipoTelefone() != null && !contatoVO.getTipoTelefone().trim().equals("")){
+			query.setParameter("tipoTelefone", contatoVO.getTipoTelefone());
+		}
 		
+
+		if(contatoVO.getSexo() != null && !contatoVO.getSexo().equals("")){
+			query.setParameter("sexo", contatoVO.getSexo());
+		}
+		
+		if(contatoVO.getDataNascimentoInicial() != null && contatoVO.getDataNascimentoFinal() != null){
+			query.setParameter("dataNascimentoInicial", contatoVO.getDataNascimentoInicial());
+			query.setParameter("dataNascimentoFinal", contatoVO.getDataNascimentoFinal());
+		}
+
+		return query.getResultList();
 	}
 	
 }
