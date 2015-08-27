@@ -17,7 +17,7 @@ public class DateConverter implements Converter {
 	public String getAsString(FacesContext context, UIComponent component,
 			Object value) throws ConverterException {
 		
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");  
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - HH:mm");  
 		
 		return format.format(value);
 	}

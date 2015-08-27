@@ -2,6 +2,7 @@ package br.com.framework.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -12,7 +13,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import br.com.framework.dao.ContatoDAOImpl;
+import br.com.framework.dao.MensagemDAOImpl;
 import br.com.framework.model.Contato;
+import br.com.framework.model.Mensagem;
 import br.com.framework.vo.ContatoVO;
 
 
@@ -32,10 +35,15 @@ public class AgendaBean implements Serializable{
 
 	private List<Contato> contatosSelecionados = new ArrayList<Contato>();
 	
+	private String mensagem;
+	
 	private static final String LIST = "listContato.xhtml";
+	
+	private Contato contatoMensagem;
 	
 	public String prepareList(){
 		contatoVO = new ContatoVO();
+		contatos = null;
 		return 	LIST;
 	}
 	
@@ -59,6 +67,25 @@ public class AgendaBean implements Serializable{
 		}
 		contatosSelecionados = new ArrayList<Contato>();
 		return pesquisar();
+	}
+	
+	public String enviarMensagem(){
+		
+		if(mensagem.trim().equals("")){
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensagem está vazia", "" ));
+		}
+		else{
+			Mensagem mensagemEnviar = new Mensagem(); 
+			mensagemEnviar.setConteudo(mensagem);
+			mensagemEnviar.setDataEnvio(new Date());
+			mensagemEnviar.setContato(contatoMensagem);
+			getMensagemDAO().insert(mensagemEnviar);
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso", ""));
+		}
+		mensagem = new String();
+		return null;
 	}
 	
 	public String prepareEdit(){
@@ -128,6 +155,17 @@ public class AgendaBean implements Serializable{
 		}
 		return contatoDAO;
 	}
+	
+	public MensagemDAOImpl getMensagemDAO(){
+		MensagemDAOImpl mensagemDAO = null;
+		try {
+			mensagemDAO = (MensagemDAOImpl)new InitialContext().lookup("java:module/MensagemDAOImpl");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mensagemDAO;
+	}
 
 	public ContatoVO getContatoVO() {
 		return contatoVO;
@@ -145,7 +183,23 @@ public class AgendaBean implements Serializable{
 		this.contatosSelecionados = contatosSelecionados;
 	}
 
+	public String getMensagem() {
+		return mensagem;
+	}
 
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+
+	public Contato getContatoMensagem() {
+		return contatoMensagem;
+	}
+
+	public void setContatoMensagem(Contato contatoMensagem) {
+		this.contatoMensagem = contatoMensagem;
+	}
+
+	
 	
 	
 }

@@ -82,11 +82,6 @@
 						<p:commandButton value="Efetuar Chamada" icon="ui-icon-extlink" actionListener="#{counterView.efetuarChamada}" />
 					</p:column>
 
-					<p:column headerText="Mensagem">
-						<p:commandButton value="Enviar Mensagem" icon="ui-icon-extlink" oncomplete="PF('modalMensagem').show();" >
-							<f:setPropertyActionListener target="#{agendaBean.contatoMensagem}" value="#{contato}" />
-						</p:commandButton>
-					</p:column>
 					
 					<f:facet name="footer">
 						<h:panelGroup>
@@ -98,21 +93,5 @@ t
 				</p:dataTable>
 			</div>
 		</h:form>
-		<p:dialog id="modalMensagem" widgetVar="modalMensagem" closable="true" closeOnEscape="true" 
-				header="Escrever Mensagem" >
-			<h:form id="formModal">
-				<p:inputTextarea value="#{agendaBean.mensagem}" 
-					cols="40" rows="9" resizable="false"
-					maxlength="255"
-					counter="displayJustificativa" counterTemplate="{0} caracteres"/>	
-					
-				<br/>
-				<h:outputText id="displayJustificativa" style="float:right;font-size: 80%;" />
-				<br/>					
-				<p:commandButton value="Enviar" action="#{agendaBean.enviarMensagem}" oncomplete="PF('modalMensagem').hide();"/>
-				
-			</h:form>	
-		
-		</p:dialog>
 	</h:body>
 </html>
