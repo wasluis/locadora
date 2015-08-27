@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -43,10 +44,11 @@ public class Contato {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataNascimento;
 
-	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE, mappedBy = "contato")
 	private List<Mensagem> mensagens;
 	
-	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE)
+//	@OneToMany(fetch=FetchType.LAZY, orphanRemoval = true, cascade=CascadeType.REMOVE)
+	@Transient
 	private List<Chamada> chamadas;
 	
 	public Contato(Long id, String nome, String telefone, Character sexo,

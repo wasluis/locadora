@@ -2,17 +2,18 @@ package br.com.framework.dao;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.Query;
 
 import br.com.framework.dao.impl.MensagemDAO;
 import br.com.framework.model.Mensagem;
 import br.com.framework.vo.MensagemVO;
 
-public class MensagemDAOImpl extends BaseDAOImpl<Mensagem> implements MensagemDAO {
+@Stateless
+public class MensagemDAOImpl extends BaseDAOImpl<Mensagem>  {
 
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Mensagem> buscarMensagens(MensagemVO mensagemVO) throws Exception{
 		
 		StringBuffer sql = new StringBuffer();

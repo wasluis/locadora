@@ -12,24 +12,38 @@
 	</h:head>
 	
 	<h:body>
+		<ui:include src="/header.xhtml" />
 		<h:form id="list">
-		
-			<div >
+			<p:growl id="messages" widgetVar="messages" autoUpdate="true" showDetail="true" sticky="true" />
+			<div class="filters">
+				<div class="campoFiltro" style="width: 20%;">
 					<p:outputLabel value="Nome"/>
 					<p:inputText value="#{agendaBean.contatoVO.nome}"/>
+				</div>
 				
+				<div class="campoFiltro" style="width: 20%;">
 					<p:outputLabel value="Telefone"/>
 					<p:inputText value="#{agendaBean.contatoVO.telefone}"/>
-				
-					<p:outputLabel value="Tipo Telefone"/>
-					<p:inputText value="#{agendaBean.contatoVO.tipoTelefone}"/>
-				
-					<p:outputLabel value="Sexo"/>
-					<p:inputText value="#{agendaBean.contatoVO.sexo}"/>
+				</div>
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel for="inputTipo" value="Tipo" />
+					<p:selectOneMenu id="inputTipo" value="#{agendaBean.contatoVO.tipoTelefone}" >
+						<f:selectItem itemLabel="Celular" itemValue="Celular"/>				
+						<f:selectItem itemLabel="Residencial" itemValue="Residencial"/>
+					</p:selectOneMenu>
+				</div>	
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel for="inputSexo" value="Sexo" />
+					<p:selectOneRadio value="#{agendaBean.contatoVO.sexo}" id="inputSexo" required="true">
+						<f:selectItem itemLabel="Masculino" itemValue="M"/>				
+						<f:selectItem itemLabel="Feminino" itemValue="F"/>
+					</p:selectOneRadio>
+				</div>
 			</div>
 			
-			<div style="margin-top: 20px;">
+			<div class="botaoBuscar">
 				<p:commandButton value="Buscar" action="#{agendaBean.pesquisar}" update="dataTable" />
+				<p:commandButton style="margin-left: 20px;" value="Adicionar" action="#{agendaBean.prepareInsert}" />
 			</div>
 			
 			<div style="margin-top: 20px;">
@@ -37,24 +51,39 @@
 					id="dataTable"
 					value="#{agendaBean.contatos}"
 					var="contato"
-					>
+					emptyMessage="Sem registros"
+					paginator="true"
+					rows="10"
+				  	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15"
+                    selection="#{agendaBean.contatosSelecionados}"
+                    rowKey="#{contato.id}">
 					
-					<p:column headerText="Nome">
+					<p:column selectionMode="multiple" style="width: 18px;"/>
+					
+					<p:column headerText="Nome" sortBy="#{contato.nome}">
 						<h:outputText value="#{contato.nome}" />
 					</p:column>
 					
-					<p:column headerText="Telefone">
+					<p:column headerText="Telefone" sortBy="#{contato.telefone}">
 						<h:outputText value="#{contato.telefone}" />
 					</p:column>
 					
 					
-					<p:column headerText="Tipo Telefone">
+					<p:column headerText="Tipo Telefone" sortBy="#{contato.tipoTelefone}">
 						<h:outputText value="#{contato.tipoTelefone}" />
 					</p:column>
 					
-					<p:column headerText="Sexo">
+					<p:column headerText="Sexo" sortBy="#{contato.sexo}">
 						<h:outputText value="#{contato.sexo}" />
 					</p:column>
+					
+					<f:facet name="footer">
+						<h:panelGroup>
+							<p:commandButton value="Excluir" update=":list:dataTable" action="#{agendaBean.remove}" style="background-color: #7096AB;"/>
+							<p:commandButton value="Editar" action="#{agendaBean.prepareEdit}"  style="background-color: #7096AB;"/>
+						</h:panelGroup>
+					</f:facet>
 				</p:dataTable>
 			</div>
 		</h:form>

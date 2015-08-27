@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -17,29 +18,42 @@ import org.primefaces.model.chart.ChartSeries;
 import br.com.framework.dao.ContatoDAOImpl;
 import br.com.framework.model.Contato;
 
-@ManagedBean(name="mensagemBean")
-@ViewScoped
+@ManagedBean(name="rankingBean")
+@SessionScoped
 public class RankingBean {
 	
-	private BarChartModel grafMensagens;
+	private BarChartModel grafMensagens = new BarChartModel();
 
-	private BarChartModel grafChamadas;
+	private BarChartModel grafChamadas = new BarChartModel();
 	
-	private BarChartModel grafDuracaoChamadas;
+	private BarChartModel grafDuracaoChamadas = new BarChartModel();
+	
+	
+	private static final String LIST = "listRanking.xhtml";
+	
+	public String prepareList(){
+
+		return 	LIST;
+	}
+
+	
 	
 	@SuppressWarnings("unchecked")
-	public void pesquisar(){
+	public String pesquisar(){
+		grafMensagens = new BarChartModel();
+		grafChamadas = new BarChartModel();
+		
 		List<Contato> contatosMensagem = getContatoDAO().buscarContatosMensagem();
 		Collections.sort(contatosMensagem, ordenarContatoPorQuantMensagem());
 		
 		this.criarGraficoMensagens();
 		this.preencherGraficoMensagens(contatosMensagem);
 		
-		List<Contato> contatosChamada = getContatoDAO().buscarContatosChamadas();
-		Collections.sort(contatosChamada, ordenarContatoPorQuantChamada());
-		this.criarGraficoChamdas();
-		this.preencherGraficoChamadas(contatosChamada);
-		
+//		List<Contato> contatosChamada = getContatoDAO().buscarContatosChamadas();
+//		Collections.sort(contatosChamada, ordenarContatoPorQuantChamada());
+//		this.criarGraficoChamdas();
+//		this.preencherGraficoChamadas(contatosChamada);
+		return "listRanking.xhtml";
 	}
 	
 	private void preencherGraficoMensagens(List<Contato> contatosMensagem) {

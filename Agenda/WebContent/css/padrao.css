@@ -15,6 +15,7 @@
     box-sizing: border-box;
     float: left;
     min-width: 120px;
+    
     padding: 5px 0 0 15px;
     position: relative;
     width: 100%;
@@ -39,4 +40,24 @@
 }
 .fieldColumn.noLabel > .ui-button:first-child {
     margin-left: 0;
+}
+
+.campoFiltro {
+	display: inline;
+	float: left;
+}
+
+.campoFiltro > label{
+	display: block !important;
+}
+
+.botaoBuscar {
+	margin-top: 8%; 
+	clear: left;
+}
+
+.filters {
+	width: 100%; 
+	float:left; 
+	margin-bottom: 10px;
 }

@@ -1,10 +1,13 @@
 package br.com.framework.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -26,6 +29,15 @@ public class AgendaBean implements Serializable{
 	
 	private List<Contato> contatos;
 	private ContatoVO contatoVO = new ContatoVO();
+
+	private List<Contato> contatosSelecionados = new ArrayList<Contato>();
+	
+	private static final String LIST = "listContato.xhtml";
+	
+	public String prepareList(){
+		contatoVO = new ContatoVO();
+		return 	LIST;
+	}
 	
 	public String prepareInsert(){
 		contato = new Contato();
@@ -34,9 +46,49 @@ public class AgendaBean implements Serializable{
 	
 	public String salvar(){
 		try{
-			getContatoDAO().insert(contato);
+			if(contato.getId() != null){
+				getContatoDAO().update(contato);
+			}
+			else{
+				getContatoDAO().insert(contato);
+			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso", ""));
+			
 		}catch(Exception e){
 			e.printStackTrace();
+		}
+		contatosSelecionados = new ArrayList<Contato>();
+		return pesquisar();
+	}
+	
+	public String prepareEdit(){
+		if(contatosSelecionados.size() == 0){
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Necessário selecionar contatos", "" ));
+			return null;
+		}
+		if(contatosSelecionados.size() > 1){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Somente um contato pode ser editado", ""));
+			return null;
+		}
+		else{
+			contato = contatosSelecionados.get(0);
+			return "formContato.xhtml";
+		}
+	}
+	
+	public String remove(){
+		if(contatosSelecionados.size() == 0){
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Necessário selecionar contatos", "" ));
+			return null;
+		}
+		else{
+			for(Contato contato : contatosSelecionados){
+				getContatoDAO().remove(contato);
+			}
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso", ""));
+
 		}
 		return pesquisar();
 	}
@@ -83,6 +135,14 @@ public class AgendaBean implements Serializable{
 
 	public void setContatoVO(ContatoVO contatoVO) {
 		this.contatoVO = contatoVO;
+	}
+
+	public List<Contato> getContatosSelecionados() {
+		return contatosSelecionados;
+	}
+
+	public void setContatosSelecionados(List<Contato> contatosSelecionados) {
+		this.contatosSelecionados = contatosSelecionados;
 	}
 
 

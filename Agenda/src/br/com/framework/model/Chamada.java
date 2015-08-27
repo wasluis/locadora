@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,6 +23,8 @@ public class Chamada {
 	
 	@Column
 	private Long contatoId;
+	
+	private Contato contato;
 
 	public Chamada(String duracao, Long contatoId) {
 		super();
@@ -55,4 +59,14 @@ public class Chamada {
 	public void setContatoId(Long contatoId) {
 		this.contatoId = contatoId;
 	}
+
+	public Contato getContato() {
+		return contato;
+	}
+
+	public void setContato(Contato contato) {
+		this.contato = contato;
+	}
+	
+	
 }

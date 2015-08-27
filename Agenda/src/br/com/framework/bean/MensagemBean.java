@@ -5,18 +5,17 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import br.com.framework.dao.ContatoDAOImpl;
 import br.com.framework.dao.MensagemDAOImpl;
-import br.com.framework.model.Contato;
 import br.com.framework.model.Mensagem;
 import br.com.framework.vo.MensagemVO;
 
 
 @ManagedBean(name="mensagemBean")
-@SessionScoped
+@ViewScoped
 public class MensagemBean implements Serializable{
 
 	/**
@@ -26,7 +25,14 @@ public class MensagemBean implements Serializable{
 	
 	private List<Mensagem> mensagens;
 	private MensagemVO mensagemVO = new MensagemVO();
+
+	private static final String LIST = "listMensagem.xhtml";
 	
+	public String prepareList(){
+		mensagemVO = new MensagemVO();
+		return 	LIST;
+	}
+
 	
 	public String pesquisar(){
 		try{
@@ -34,7 +40,7 @@ public class MensagemBean implements Serializable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "listMensagem.xhtml";
+		return null;
 	}
 
 	

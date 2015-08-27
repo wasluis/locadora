@@ -59,6 +59,7 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T>{
 	}
 	
 	public void remove(T bean){
+		bean = getEntityManager().merge(bean);
 		getEntityManager().remove(bean);
 	}
 	

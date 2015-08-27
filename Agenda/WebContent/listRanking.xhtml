@@ -12,10 +12,10 @@
 	</h:head>
 	
 	<h:body>
+		<ui:include src="/header.xhtml" />
 		<h:form id="list">
-		
 			<div>
-				<p:chart type="bar" model="#{rankingBean.grafMensagens}" />
+				<p:chart type="bar" model="#{rankingBean.grafMensagens}" style="width: 600px;"/>
 			</div>
 			
 			<div >
