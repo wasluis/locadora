@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Agenda</title>
+		<link type="text/css" href="/Agenda/css/padrao.css" rel="stylesheet"/>
+		
+	</h:head>
+	
+	<h:body>
+		<ui:include src="/header.xhtml" />
+		<h:form id="list">
+		
+			<div class="filters">
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel for="inputDataInicial" value="Data de envio inicial"/>
+		            <p:calendar id="inputDataInicial" locale="pt_BR" value="#{mensagemBean.mensagemVO.dataEnvioInicial}" 
+		                pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" mask="true"/>
+		            <p:watermark value="DD/MM/AAAA" for="inputDataInicial" />
+				</div>
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel for="inputDataFinal" value="Data de envio final"/>
+		            <p:calendar id="inputDataFinal" locale="pt_BR" value="#{mensagemBean.mensagemVO.dataEnvioFinal}" 
+		                pattern="dd/MM/yyyy" showButtonPanel="true" navigator="true" mask="true"/>
+		            <p:watermark value="DD/MM/AAAA" for="inputDataFinal" />
+				</div>
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel value="Conteúdo"/>
+					<p:inputText value="#{mensagemBean.mensagemVO.conteudo}"/>
+				</div>
+				<div class="campoFiltro" style="width: 20%;">
+					<p:outputLabel value="Nome do contato"/>
+					<p:inputText value="#{mensagemBean.mensagemVO.contato.nome}"/>
+				</div>
+			</div>
+			
+			<div class="botaoBuscar">
+				<p:commandButton value="Buscar" action="#{mensagemBean.pesquisar}" update="dataTable" />
+			</div>
+			
+			<div style="margin-top: 20px;">
+				<p:dataTable
+					id="dataTable"
+					value="#{mensagemBean.mensagens}"
+					var="mensagem"
+					emptyMessage="Sem registros"
+					paginator="true"
+					rows="10"
+				  	paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15"
+					>
+					<p:column headerText="Data de envio" sortBy="#{mensagem.dataEnvio}">
+						<h:outputText value="#{mensagem.dataEnvio}" converter="converters.DateConverter"/>
+					</p:column>
+					
+					<p:column headerText="Conteúdo" sortBy="#{mensagem.conteudo}">
+						<h:outputText value="#{mensagem.conteudo}" />
+					</p:column>
+					
+					<p:column headerText="Contato" sortBy="#{mensagem.contato.nome}">
+						<h:outputText value="#{mensagem.contato.nome}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+	</h:body>
+</html>

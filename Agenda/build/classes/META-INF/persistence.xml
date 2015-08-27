@@ -6,9 +6,15 @@
 	
 	<persistence-unit name="agenda" transaction-type="JTA">
 		<jta-data-source>jdbc/Agenda</jta-data-source>		
+<<<<<<< HEAD
 		<class>br.com.framework.model.Contato</class>
 		<class>br.com.framework.model.Chamada</class>
 		
+=======
+		<class>br.com.framework.model.Contato</class>	
+		<class>br.com.framework.model.Chamada</class>
+		<class>br.com.framework.model.Mensagem</class>
+>>>>>>> branch 'master' of https://github.com/wasluis/locadora.git
 		<properties> 
            <property name="hibernate.show_sql"   value="true"/>
 	        <property name="hibernate.format_sql" value="true"/>
